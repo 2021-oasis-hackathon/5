@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
+import 'Qr_reading.dart';
 import 'example.dart';
+import 'package:camera/camera.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -28,6 +33,8 @@ class MyApp extends StatelessWidget {
       home: KakaoMapTest(),
     );
   }
+
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -114,3 +121,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
