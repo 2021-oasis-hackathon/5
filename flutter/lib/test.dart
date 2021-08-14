@@ -30,14 +30,14 @@ class _testState extends State<test> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 1000.0,
+              expandedHeight: 700.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Text("Sliver with bottomnavbar",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16.0,
                       )),
                   background: KakaoMapTest()

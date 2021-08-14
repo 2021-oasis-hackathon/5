@@ -4,12 +4,12 @@ import 'Qr_reading.dart';
 import 'map.dart';
 import 'package:camera/camera.dart';
 import 'test.dart';
-
+import 'slidingup_panel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(test_home());
+  runApp(sliding_home());
 }
 
 class MyApp extends StatelessWidget {
