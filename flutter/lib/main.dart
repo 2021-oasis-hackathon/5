@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'Qr_reading.dart';
-import 'example.dart';
+import 'map.dart';
 import 'package:camera/camera.dart';
+import 'test.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(test_home());
 }
 
 class MyApp extends StatelessWidget {
