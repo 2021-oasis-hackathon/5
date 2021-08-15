@@ -42,6 +42,9 @@ dependencies:
   provider: ^5.0.0
   material_design_icons_flutter: ^4.0.5955
   implicitly_animated_reorderable_list: ^0.4.0
+  flutter_map: ^0.13.1
+  latlong2: ^0.8.0
+  cached_network_image: ^3.1.0
 
 
 
