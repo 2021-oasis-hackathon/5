@@ -10,14 +10,16 @@ class KakaoMapTest extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Kakao map webview test')),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+
           KakaoMapView(
               width: size.width,
-              height: 400,
+              height: size.height,
               kakaoMapKey: kakaoMapKey,
-              lat: 33.450701,
-              lng: 126.570667,
+              lat: 35.227358,
+              lng: 126.841555,
               showMapTypeControl: true,
               showZoomControl: true,
               markerImageURL:
@@ -28,11 +30,7 @@ class KakaoMapTest extends StatelessWidget {
 
                 //await _openKakaoMapScreen(context);
               }),
-          ElevatedButton(
-              child: Text('Kakao map screen'),
-              onPressed: () async {
-                await _openKakaoMapScreen(context);
-              })
+
         ],
       ),
     );
