@@ -92,7 +92,56 @@ class _slidingState extends State<sliding> {
     );
   }
   Widget _panel(ScrollController sc, int _selectedIndex, bool _camera_ready){
+    if(_selectedIndex == 1 && !_camera_ready){
+      return MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView(
+            controller: sc,
+            children: <Widget>[
+              SizedBox(
+                height: 12.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 30,
+                    height: 5,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 18.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Scan Qr code of the shop",
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 36.0,
+              ),
+
+
+
+            ],
+          )
+      );
+    }
     if(_selectedIndex == 1 && _camera_ready){
+
+
       return qr_reading();
     }
     return MediaQuery.removePadding(
