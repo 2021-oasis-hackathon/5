@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:qr_flutter/qr_flutter.dart';
 void main() {
   runApp(MyApp());
 }
@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -92,15 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+          children: [
+            QrImage(data: "123456789",
+            version: QrVersions.auto,
+                size: 200.0,)
           ],
+
         ),
       ),
       floatingActionButton: FloatingActionButton(
