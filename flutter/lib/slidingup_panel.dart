@@ -25,19 +25,22 @@ class sliding extends StatefulWidget {
 
 class _slidingState extends State<sliding> {
   int _selectedIndex = 0;
-  List<Widget> _widgetoptions = <Widget>[
-    Text(
-      'Index 0: shop',
-    ),
-    qr_reading(),
-    Text(
-      'Index 2: Mypage',
-    ),
-  ];
+  bool _camera_ready = false;
+
 
   void _onItemTapped(int index){
     setState(() {
       _selectedIndex = index;
+    });
+  }
+  void _cam_is_ready(){
+    setState(() {
+      _camera_ready = true;
+    });
+  }
+  void _cam_isnot_ready(){
+    setState(() {
+      _camera_ready = false;
     });
   }
 
@@ -47,12 +50,14 @@ class _slidingState extends State<sliding> {
     return Scaffold(
 
       body: SlidingUpPanel(
+        onPanelOpened: (){_cam_is_ready();},
+        onPanelClosed: (){_cam_isnot_ready();},
         maxHeight: size.height,
         minHeight: 60,
         parallaxEnabled: true,
         parallaxOffset: .5,
 
-        panelBuilder: (sc) => _panel(sc,_selectedIndex),
+        panelBuilder: (sc) => _panel(sc,_selectedIndex, _camera_ready),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(18.0),
           topRight: Radius.circular(18.0)
@@ -86,8 +91,8 @@ class _slidingState extends State<sliding> {
       ),
     );
   }
-  Widget _panel(ScrollController sc, int _selectedIndex){
-    if(_selectedIndex == 1){
+  Widget _panel(ScrollController sc, int _selectedIndex, bool _camera_ready){
+    if(_selectedIndex == 1 && _camera_ready){
       return qr_reading();
     }
     return MediaQuery.removePadding(
