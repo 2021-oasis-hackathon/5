@@ -79,7 +79,23 @@ class _qr_readingState extends State<qr_reading> {
             ),
             SizedBox(height: 36.0,),
 
-            Expanded(child: _buildQrView(context),)
+            Expanded(child: _buildQrView(context),flex: 3,),
+            Expanded(
+              flex: 1,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    if (result != null)
+                      Text(
+                          'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                    else
+                      Text('Scan a code'),
+                  ],
+                ),
+              ),
+            )
           ],
         )
     );
