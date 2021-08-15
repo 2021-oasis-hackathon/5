@@ -38,6 +38,10 @@ dependencies:
   permission_handler: ^6.1.1
   qr_code_scanner: ^0.5.2
   sliding_up_panel: ^2.0.0+1
+  material_floating_search_bar: ^0.3.4
+  provider: ^5.0.0
+  material_design_icons_flutter: ^4.0.5955
+  implicitly_animated_reorderable_list: ^0.4.0
 
 
 

@@ -57,6 +57,7 @@ class _testState extends State<test> {
             title: Text('Home', style: TextStyle(color: Colors.black),),
           ),
           BottomNavigationBarItem(
+
             icon: Icon(Icons.card_giftcard),
             title: Text('Deals',style: TextStyle(color: Colors.black),),
           ),

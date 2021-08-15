@@ -55,7 +55,7 @@ class _qr_readingState extends State<qr_reading> {
                 children: <Widget>[
                   if (result != null)
                     Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                        'Data: ${result!.code}')
                   else
                     Text('Scan a code'),
                   Row(

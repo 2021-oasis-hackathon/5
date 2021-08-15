@@ -21,7 +21,27 @@ class sliding extends StatefulWidget {
   _slidingState createState() => _slidingState();
 }
 
+
 class _slidingState extends State<sliding> {
+  int _selectedIndex = 0;
+  List<Widget> _widgetoptions = <Widget>[
+    Text(
+      'Index 0: shop',
+    ),
+    Text(
+      'Index 1: camera',
+    ),
+    Text(
+      'Index 2: Mypage',
+    ),
+  ];
+
+  void _onItemTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,13 +49,36 @@ class _slidingState extends State<sliding> {
 
       body: SlidingUpPanel(
         maxHeight: size.height,
+        minHeight: 60,
         panel: Center(
 
-          child: Text("This is the sliding Widget"),
+          child: _widgetoptions.elementAt(_selectedIndex)
         ),
         body: Center(
           child: KakaoMapTest(),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shop),
+            label: 'shop'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            label: 'camera'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Mypage'
+          )
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blueAccent,
+        onTap: _onItemTapped
+        
+
       ),
     );  }
 }
