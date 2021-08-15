@@ -14,12 +14,20 @@ class MenusController < ApplicationController
 
 	# POST /shops/:id/menus
 	def create
-		menu = Menu.create!(menu_params)
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
+		param = menu_params
+		param[:shop_id] = params[:shop_id]
+		menu = Menu.create!(param)
 		json_response(menu, :created)
 	end
 
 	# PUT /shops/:id/menus/:id
 	def update
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
 		menu = Menu.find(params[:id])
 		menu.update!(menu_params)
 		json_response(menu, :ok)
@@ -27,6 +35,9 @@ class MenusController < ApplicationController
 
 	# DELETE /shops/:id/menus/:id
 	def destroy
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
 		Menu.destroy(params[:id])
 		response = { message: Message.menu_destroyed }
 		json_response(response, :no_content)

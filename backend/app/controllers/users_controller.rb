@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 	# POST /users
 	def create
 		# TODO: 하드코딩 멈춰
-		if (user_params[:role] != 'customer' && user_params[:role] != 'shop')
+		if (user_params[:role] != 'customer' && user_params[:role] != 'host')
 			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 		end
 		user = User.create!(user_params)
@@ -28,9 +28,12 @@ class UsersController < ApplicationController
 
 	# PUT /users/:id
 	def update
+		if (user_params[:role] != 'customer' && user_params[:role] != 'host')
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
 		user = User.find(params[:id])
 		user.update!(user_params)
-		json_rseponse(user, :ok)
+		json_response(user, :ok)
 	end
 
 	# DELETE /users/:id

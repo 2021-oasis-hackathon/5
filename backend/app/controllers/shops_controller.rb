@@ -13,12 +13,24 @@ class ShopsController < ApplicationController
 
 	# POST /shops
 	def create
-		shop = Shop.create!(shop_params)
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
+		param = shop_params
+		param[:host_id] = @current_user.id
+		shop = Shop.create!(param)
+		#shop.user_id = @current_user.id
+		#logger.debug(shop)
+		#shop.save
+		#shop = Shop.create!(shop_params)
 		json_response(shop, :created)
 	end
 
 	# PUT /shops/:id
 	def update
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
 		shop = Shop.find(params[:id])
 		shop.update!(shop_params)
 		json_rseponse(shop, :ok)
@@ -26,6 +38,9 @@ class ShopsController < ApplicationController
 
 	# DELETE /shops/:id
 	def destroy
+		if (@current_user.role == "customer")
+			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		end
 		Shop.destroy(params[:id])
 		response = { message: Message.shop_destroyed }
 		json_response(response, :no_content)

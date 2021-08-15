@@ -1,7 +1,8 @@
 class Shop < ApplicationRecord
 	
 	has_many :menus, dependent: :destroy
-	belongs_to :host
+	has_many :customer, class_name: "User"
+	belongs_to :host, class_name: "User"
 
 	validates_presence_of :name, :detail, :location, :open_time, :latitude, :longitude, :image
 	validates :name, length: { minimum: 2, maximum: 20 }
