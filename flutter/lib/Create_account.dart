@@ -1,38 +1,32 @@
-import 'dart:io';
-import 'package:http/http.dart';
 import 'package:flutter/material.dart';
-import 'package:qount/Create_account.dart';
-import 'package:qount/examples/s_panel_example.dart';
-import 'slidingup_panel.dart';
-void main() => runApp(login_home());
 
-class login_home extends StatelessWidget {
-  const login_home({Key? key}) : super(key: key);
+class SignUp_home extends StatelessWidget {
+  const SignUp_home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'login page',
+      title: 'Sign up home',
+      home: SignUp(),
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: login(),
     );
   }
 }
 
-class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  _loginState createState() => _loginState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _loginState extends State<login> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
+        title: Text("Sign Up Page"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -87,9 +81,7 @@ class _loginState extends State<login> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => sliding_home()));
-                },
+                onPressed: () {},
                 child: Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
@@ -100,10 +92,7 @@ class _loginState extends State<login> {
               height: 130,
             ),
             TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => SignUp()));
-                }
+                onPressed: () {}
                 ,child: Text('New User? Create Account')
             )
           ],
@@ -112,3 +101,4 @@ class _loginState extends State<login> {
     );
   }
 }
+

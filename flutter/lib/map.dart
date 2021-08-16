@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'dart:math';
-
 import 'package:flutter/services.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
@@ -14,6 +14,8 @@ const String kakaoMapKey = '126e0dede332c2cfa302fbae9e177cf5';
 class KakaoMapTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -39,7 +41,10 @@ class KakaoMapTest extends StatelessWidget {
                         .showSnackBar(SnackBar(content: Text('Marker is clicked')));
 
                     //await _openKakaoMapScreen(context);
-                  }),
+                  },
+                  customScript: '''
+                  ''',),
+
 
             ],
           ),

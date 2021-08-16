@@ -24,13 +24,12 @@ class _slidingState extends State<sliding> {
 
   int _selectedIndex = 0;
   bool _camera_ready = false;
-  
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       _pc.open();
-      _pc.animatePanelToPosition(0.3);
+      _pc.animatePanelToPosition(0.1);
     });
   }
 
@@ -48,49 +47,60 @@ class _slidingState extends State<sliding> {
 
   @override
   Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: SlidingUpPanel(
-        panelSnapping: false,
-        controller: _pc,
-        onPanelOpened: () {
-          _cam_is_ready();
-        },
-        onPanelClosed: () {
-          _cam_isnot_ready();
-        },
-        maxHeight: size.height,
-        minHeight: 60,
-        parallaxOffset: .5,
-        collapsed: Container(
-          color: Colors.blue,
-          child: Center(
-            child: Text(
-              "Scan Qr code of the shop",
-              style: TextStyle(color: Colors.white),
+        body: SlidingUpPanel(
+          panelSnapping: false,
+          controller: _pc,
+          onPanelOpened: () {
+            _cam_is_ready();
+          },
+          onPanelClosed: () {
+            _cam_isnot_ready();
+          },
+          maxHeight: size.height,
+          minHeight: 0,
+          parallaxOffset: .5,
+          collapsed: Container(
+            decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.all(Radius.circular(12.0))),
+            child: Center(
+              child: Text(
+                "Scan Qr code of the shop",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
+          panelBuilder: (sc) => _panel(sc, _selectedIndex, _camera_ready),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
+          body: Center(
+            child: KakaoMapTest(),
+          ),
         ),
-        panelBuilder: (sc) => _panel(sc, _selectedIndex, _camera_ready),
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
-        body: Center(
-          child: KakaoMapTest(),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'shop'),
-            BottomNavigationBarItem(icon: Icon(Icons.camera), label: 'camera'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Mypage')
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent,
-          onTap: _onItemTapped
-      ),
-    );
+        bottomNavigationBar: SizedBox(
+          height: 70,
+          child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.shopping_cart_outlined), label: 'shop'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.camera_alt_outlined), label: 'camera'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: 'Mypage')
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.blueAccent,
+              onTap: _onItemTapped),
+        ));
   }
 
   Widget _panel(ScrollController sc, int _selectedIndex, bool _camera_ready) {
