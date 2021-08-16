@@ -3,15 +3,12 @@ import 'package:qount/Qr_reading.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'map.dart';
 
-
 class sliding_home extends StatelessWidget {
   const sliding_home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: sliding()
-    );
+    return MaterialApp(home: sliding());
   }
 }
 
@@ -22,23 +19,28 @@ class sliding extends StatefulWidget {
   _slidingState createState() => _slidingState();
 }
 
-
 class _slidingState extends State<sliding> {
+  PanelController _pc = new PanelController();
+
   int _selectedIndex = 0;
   bool _camera_ready = false;
+  
 
-
-  void _onItemTapped(int index){
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pc.open();
+      _pc.animatePanelToPosition(0.3);
     });
   }
-  void _cam_is_ready(){
+
+  void _cam_is_ready() {
     setState(() {
       _camera_ready = true;
     });
   }
-  void _cam_isnot_ready(){
+
+  void _cam_isnot_ready() {
     setState(() {
       _camera_ready = false;
     });
@@ -48,51 +50,51 @@ class _slidingState extends State<sliding> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-
       body: SlidingUpPanel(
-        onPanelOpened: (){_cam_is_ready();},
-        onPanelClosed: (){_cam_isnot_ready();},
+        panelSnapping: false,
+        controller: _pc,
+        onPanelOpened: () {
+          _cam_is_ready();
+        },
+        onPanelClosed: () {
+          _cam_isnot_ready();
+        },
         maxHeight: size.height,
         minHeight: 60,
-        parallaxEnabled: true,
         parallaxOffset: .5,
-
-        panelBuilder: (sc) => _panel(sc,_selectedIndex, _camera_ready),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(18.0),
-          topRight: Radius.circular(18.0)
+        collapsed: Container(
+          color: Colors.blue,
+          child: Center(
+            child: Text(
+              "Scan Qr code of the shop",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
-
+        panelBuilder: (sc) => _panel(sc, _selectedIndex, _camera_ready),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
         body: Center(
           child: KakaoMapTest(),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'shop'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.camera),
-            label: 'camera'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Mypage'
-          )
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blueAccent,
-        onTap: _onItemTapped
-        
 
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'shop'),
+            BottomNavigationBarItem(icon: Icon(Icons.camera), label: 'camera'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Mypage')
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blueAccent,
+          onTap: _onItemTapped
       ),
     );
   }
-  Widget _panel(ScrollController sc, int _selectedIndex, bool _camera_ready){
-    if(_selectedIndex == 1 && !_camera_ready){
+
+  Widget _panel(ScrollController sc, int _selectedIndex, bool _camera_ready) {
+    if (_selectedIndex == 1 && !_camera_ready) {
       return MediaQuery.removePadding(
           context: context,
           removeTop: true,
@@ -132,16 +134,10 @@ class _slidingState extends State<sliding> {
               SizedBox(
                 height: 36.0,
               ),
-
-
-
             ],
-          )
-      );
+          ));
     }
-    if(_selectedIndex == 1 && _camera_ready){
-
-
+    if (_selectedIndex == 1 && _camera_ready) {
       return qr_reading();
     }
     return MediaQuery.removePadding(
@@ -185,7 +181,6 @@ class _slidingState extends State<sliding> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
             ),
             SizedBox(
               height: 36.0,
@@ -202,7 +197,6 @@ class _slidingState extends State<sliding> {
                   SizedBox(
                     height: 12.0,
                   ),
-
                 ],
               ),
             ),
@@ -233,8 +227,6 @@ class _slidingState extends State<sliding> {
               height: 24,
             ),
           ],
-        )
-    );
+        ));
   }
 }
-
