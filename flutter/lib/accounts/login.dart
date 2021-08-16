@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
-import 'package:qount/Create_account.dart';
+import 'Create_account.dart';
 import 'package:qount/examples/s_panel_example.dart';
-import 'slidingup_panel.dart';
+import '../screens/home/slidingup_panel.dart';
 void main() => runApp(login_home());
 
 class login_home extends StatelessWidget {
@@ -12,7 +12,6 @@ class login_home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'login page',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: login(),
     );
@@ -31,12 +30,12 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Login Page"),
-      ),
+
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            SizedBox(height: 100,),
+
             Padding(
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
@@ -49,19 +48,22 @@ class _loginState extends State<login> {
                     child: Image.asset('imgs/logo.png')),
               ),
             ),
+            SizedBox(height: 100,),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 60),
               child: TextField(
                 decoration: InputDecoration(
+                    fillColor: Colors.white10,
+                    filled: true,
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),
+            SizedBox(height: 15,),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 60),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
 

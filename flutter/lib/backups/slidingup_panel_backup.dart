@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qount/Qr_reading.dart';
+import '../screens/home/Qr_reading.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'map.dart';
+import '../screens/home/map.dart';
 
 
 class sliding_home extends StatelessWidget {
