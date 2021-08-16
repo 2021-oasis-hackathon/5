@@ -51,7 +51,7 @@ class MenusController < ApplicationController
 
 	def has_update_authority?(menu)
 		shop = Shop.find(menu.shop_id)
-		(@current_user.id == shop.host_id || @current_user.role == "admin"
+		@current_user.id == shop.host_id || @current_user.role == "admin"
 	end
 
 	def has_delete_authority?
