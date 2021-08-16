@@ -13,42 +13,51 @@ class ShopsController < ApplicationController
 
 	# POST /shops
 	def create
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		if (has_create_authority?)
+			param = shop_params
+			param[:host_id] = @current_user.id
+			shop = Shop.create!(param)
+			return json_response(shop, :created)
 		end
-		param = shop_params
-		param[:host_id] = @current_user.id
-		shop = Shop.create!(param)
-		#shop.user_id = @current_user.id
-		#logger.debug(shop)
-		#shop.save
-		#shop = Shop.create!(shop_params)
-		json_response(shop, :created)
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	# PUT /shops/:id
 	def update
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
-		end
 		shop = Shop.find(params[:id])
-		shop.update!(shop_params)
-		json_rseponse(shop, :ok)
+		if (has_update_authority?(shop))
+			shop.update!(shop_params)
+			return json_response(shop, :ok)
+		end
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	# DELETE /shops/:id
 	def destroy
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		shop = Shop.find(params[:id])
+		if (has_delete_authority?(shop))
+			Shop.destroy(params[:id])
+			response = { message: Message.shop_destroyed }
+			return json_response(response, :no_content)
 		end
-		Shop.destroy(params[:id])
-		response = { message: Message.shop_destroyed }
-		json_response(response, :no_content)
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	private
 
 	def shop_params
 		params.require(:shop).permit(:name, :detail, :location, :open_time, :latitude, :longitude, :image)
+	end
+
+	def has_update_authority?(shop)
+		@current_user.id == shop.host_id || @current_user.role == "admin"
+	end
+
+	def has_delete_authority?(shop)
+		@current_user.id == shop.host_id || @current_user.role == "admin"
+	end
+
+	def has_create_authority?
+		@current_user.role == "host"
 	end
 end

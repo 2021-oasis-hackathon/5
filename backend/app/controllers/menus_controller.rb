@@ -14,38 +14,53 @@ class MenusController < ApplicationController
 
 	# POST /shops/:id/menus
 	def create
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		if (has_create_authority?)
+			param = menu_params
+			param[:shop_id] = params[:shop_id]
+			menu = Menu.create!(param)
+			return json_response(menu, :created)
 		end
-		param = menu_params
-		param[:shop_id] = params[:shop_id]
-		menu = Menu.create!(param)
-		json_response(menu, :created)
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	# PUT /shops/:id/menus/:id
 	def update
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
-		end
 		menu = Menu.find(params[:id])
-		menu.update!(menu_params)
-		json_response(menu, :ok)
+		if (has_update_authority?(menu))
+			menu.update!(menu_params)
+			return json_response(menu, :ok)
+		end
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	# DELETE /shops/:id/menus/:id
 	def destroy
-		if (@current_user.role == "customer")
-			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
+		if (has_delete_authority?)
+			Menu.destroy(params[:id])
+			response = { message: Message.menu_destroyed }
+			return json_response(response, :no_content)
 		end
-		Menu.destroy(params[:id])
-		response = { message: Message.menu_destroyed }
-		json_response(response, :no_content)
+		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
 
 	private
 
 	def menu_params
 		params.require(:menu).permit(:name, :detail, :price, :image)
+	end
+
+	def has_update_authority?(menu)
+		shop = Shop.find(menu.shop_id)
+		(@current_user.id == shop.host_id || @current_user.role == "admin"
+	end
+
+	def has_delete_authority?
+		shop = Shop.find(menu.shop_id)
+		@current_user.id == shop.host_id || @current_user.role == "admin"
+	end
+
+	def has_create_authority?
+		shop = Shop.find(params[:shop_id])
+		@current_user.id == shop.host_id 
 	end
 end

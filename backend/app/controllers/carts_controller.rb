@@ -17,11 +17,9 @@ class CartsController < ApplicationController
 			raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 		end
 		param = cart_params
-		#param[:menu_id] = params[:menu_id]
 		menu = Menu.find(param[:menu_id])
 		total_price = param[:count].to_i * menu.price
 		param[:price] = total_price.to_s
-		#param[:customer_id] = current_user.id
 		cart = Carts.create!(param)
 		json_response(param, :created)
 	end
