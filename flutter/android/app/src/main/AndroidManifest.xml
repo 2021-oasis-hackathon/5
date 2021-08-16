@@ -4,6 +4,8 @@
         android:label="qount"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDPZgxS1Z6L4f9-_1QBl6ct4sitX4eM9HA"/>
 
        <activity
             android:name=".MainActivity"

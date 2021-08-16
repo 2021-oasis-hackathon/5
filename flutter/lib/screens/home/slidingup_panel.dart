@@ -27,9 +27,14 @@ class _slidingState extends State<sliding> {
 
   void _onItemTapped(int index) {
     setState(() {
+      _camera_ready = false;
       _selectedIndex = index;
-      _pc.open();
-      _pc.animatePanelToPosition(0.1);
+      if(_pc.panelPosition < 0.1){
+        _pc.open();
+        _pc.animatePanelToPosition(0.1, duration: Duration(milliseconds: 500));
+      }
+
+
     });
   }
 
@@ -64,25 +69,15 @@ class _slidingState extends State<sliding> {
           onPanelClosed: () {
             _cam_isnot_ready();
           },
-          maxHeight: size.height,
+          maxHeight: 640,
           minHeight: 0,
           parallaxOffset: .5,
-          collapsed: Container(
-            decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.all(Radius.circular(12.0))),
-            child: Center(
-              child: Text(
-                "Scan Qr code of the shop",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+
           panelBuilder: (sc) => _panel(sc, _selectedIndex, _camera_ready),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
           body: Center(
-            child: KakaoMapTest(),
+            child: Googlemap_home(),
           ),
         ),
         bottomNavigationBar: SizedBox(
