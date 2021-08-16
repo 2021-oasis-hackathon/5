@@ -58,7 +58,7 @@ class _slidingState extends State<sliding> {
           child: _widgetoptions.elementAt(_selectedIndex)
         ),
         body: Center(
-          child: KakaoMapTest(),
+          child: Googlemap_home(),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

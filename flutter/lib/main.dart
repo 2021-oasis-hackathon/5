@@ -5,6 +5,8 @@ import 'screens/home/map.dart';
 import 'package:camera/camera.dart';
 import 'screens/home/slidingup_panel.dart';
 
+const SERVER_IP = 'http://10.0.2.2:3000';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -12,7 +14,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: KakaoMapTest(),
+      home: Googlemap_home(),
     );
   }
-
-
 }
 
 class MyHomePage extends StatefulWidget {
@@ -121,5 +120,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-

@@ -1,44 +1,60 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:provider/provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-const String kakaoMapKey = '126e0dede332c2cfa302fbae9e177cf5';
+class Googlemap_home extends StatefulWidget {
+  const Googlemap_home({Key? key}) : super(key: key);
 
-class KakaoMapTest extends StatelessWidget {
+  @override
+  _Googlemap_homeState createState() => _Googlemap_homeState();
+}
+
+class _Googlemap_homeState extends State<Googlemap_home> {
+  List<Marker> _markers = [];
+  late BitmapDescriptor icon;
+
+  @override
+  void initState() {
+    super.initState();
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'imgs/logo1.png')
+        .then((value) => icon = value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng(37.4537251, 126.7960716),
+      zoom: 14.4746,
+    );
+
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
         body: Stack(
       fit: StackFit.expand,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            KakaoMapView(
-              width: size.width,
-              height: size.height,
-              kakaoMapKey: kakaoMapKey,
-              lat: 35.227358,
-              lng: 126.841555,
-              showMapTypeControl: true,
-              showZoomControl: true,
-              markerImageURL:
-                  'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-              onTapMarker: (message) async {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('Marker is clicked')));
-
-                //await _openKakaoMapScreen(context);
-              },
-            ),
-          ],
+        GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: _kGooglePlex,
+          onCameraMove: (_) {},
+          myLocationButtonEnabled: false,
+          onMapCreated: (GoogleMapController sc) {
+            setState(() {
+              _markers.add(Marker(
+                  markerId: MarkerId('Google'),
+                  draggable: false,
+                  icon: icon,
+                  position: LatLng(37.4537251, 126.7960716)));
+            });
+          },
+          markers: Set.from(_markers),
         ),
         FloatingSearchBar(
           transitionCurve: Curves.easeInOutCubic,
@@ -66,18 +82,4 @@ class KakaoMapTest extends StatelessWidget {
       ),
     );
   }
-
-  // Future<void> _openKakaoMapScreen(BuildContext context) async {
-  //   KakaoMapUtil util = KakaoMapUtil();
-  //
-  //   // String url = await util.getResolvedLink(
-  //   //     util.getKakaoMapURL(37.402056, 127.108212, name: 'Kakao 본사'));
-  //
-  //   /// This is short form of the above comment
-  //   String url =
-  //   await util.getMapScreenURL(37.402056, 127.108212, name: 'Kakao 본사');
-  //
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (_) => KakaoMapScreen(url: url)));
-  // }
 }
