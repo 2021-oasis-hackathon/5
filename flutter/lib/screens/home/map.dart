@@ -61,7 +61,10 @@ class _Googlemap_homeState extends State<Googlemap_home> {
           initialCameraPosition: _kGooglePlex,
           onCameraMove: (_) {},
           myLocationButtonEnabled: false,
+
           onMapCreated: _onMapCreated,
+
+
           markers: Set.from(_markers),
         ),
         FloatingSearchBar(

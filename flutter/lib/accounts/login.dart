@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
+import 'package:qount/screens/shop/shop.dart';
 import 'package:qount/utils/display.dart';
 import '../main.dart';
 import 'Create_account.dart';
@@ -112,7 +113,7 @@ class _LoginState extends State<LoginHome> {
                         .addPostFrameCallback((timeStamp) {
                       // user as argumnet
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => sliding_home()));
+                          builder: (context) => ShopGridView(me: user)));
                     });
                   } else {
                     displayDialog(context, "An Error Occurred",
@@ -125,9 +126,9 @@ class _LoginState extends State<LoginHome> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 130,
-            ),
+            // SizedBox(
+            //   height: 130,
+            // ),
             TextButton(
                 onPressed: () {
                   Navigator.push(
