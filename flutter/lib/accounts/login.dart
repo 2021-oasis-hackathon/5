@@ -126,9 +126,9 @@ class _LoginState extends State<LoginHome> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 130,
-            ),
+            // SizedBox(
+            //   height: 130,
+            // ),
             TextButton(
                 onPressed: () {
                   Navigator.push(

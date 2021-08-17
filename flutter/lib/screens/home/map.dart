@@ -47,11 +47,11 @@ class _Googlemap_homeState extends State<Googlemap_home> {
           myLocationButtonEnabled: false,
           onMapCreated: (GoogleMapController sc) {
             setState(() {
-              _markers.add(Marker(
-                  markerId: MarkerId('Google'),
-                  draggable: false,
-                  icon: icon,
-                  position: LatLng(37.4537251, 126.7960716)));
+              // _markers.add(Marker(
+              //     markerId: MarkerId('Google'),
+              //     draggable: false,
+              //     icon: icon,
+              //     position: LatLng(37.4537251, 126.7960716)));
             });
           },
           markers: Set.from(_markers),
