@@ -183,7 +183,11 @@ class _SignUpState extends State<SignUp> {
                   var phoneNumber = _phoneNumberController.text;
                   var status = await attemptSignUp(email, password, name,
                       passwordConfirmation, "customer", phoneNumber);
-                  if (status == 201) {
+
+                  if (!isCheck || !isCheck2) {
+                    displayDialog(context, "An Error Occurred",
+                        "이용 약관 및 정보 수집 여부에 동의해주세요.");
+                  } else if (status == 201) {
                     SchedulerBinding.instance!
                         .addPostFrameCallback((timeStamp) async {
                       await showDialog<String>(
