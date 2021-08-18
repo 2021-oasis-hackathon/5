@@ -307,7 +307,7 @@ class _orderState extends State<order> {
   }
 
   Future<int> putShop(int customerId, Shop shop) async {
-    var res = await http.post(Uri.parse('$SERVER_IP/shop/${shop.id}'),
+    var res = await http.put(Uri.parse('$SERVER_IP/shop/${shop.id}'),
         headers: {"Content-Type": "application/json"},
         body: json.encode({
           "shop": {"customer_count": (shop.customerCount + 1).toString()}
