@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
+import 'package:qount/models/user.dart';
 
-void main() => runApp(order_home());
+
+//void main() => runApp(order_home());
+
 
 class order_home extends StatelessWidget {
-  const order_home({Key? key}) : super(key: key);
+  UserMe me;
+  order_home({required this.me});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: order());
+    return MaterialApp(home: order(me: me));
   }
 }
 
 class order extends StatefulWidget {
-  const order({Key? key}) : super(key: key);
+  UserMe me;
+  order({required this.me});
 
   @override
-  _orderState createState() => _orderState();
+  _orderState createState() => _orderState(me: me);
 }
 
 class _orderState extends State<order> {
+  UserMe me;
+  _orderState({required this.me});
   bool here_pressed = false;
   bool togo_pressed = false;
   String here_or_togo = 'here';
@@ -59,6 +66,7 @@ class _orderState extends State<order> {
 
   @override
   Widget build(BuildContext context) {
+
     void _here_change_pressed() {
       setState(() {
         if (here_pressed) {
