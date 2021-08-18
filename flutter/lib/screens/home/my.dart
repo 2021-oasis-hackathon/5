@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
 import 'package:flutter/src/widgets/icon.dart';
@@ -21,21 +22,38 @@ class _State extends State<MyCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Stack(
+      children: [
+        Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              "마이페이지",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+            SizedBox(
+              height: 30,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(
+                  width: 30,
+                ),
+                Text(
+                  '마이페이지',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
                 Container(
                   width: 100,
                   height: 100,
@@ -48,38 +66,76 @@ class _State extends State<MyCustomerPage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: 10),
-                      Text(
-                        "ID: ${me.email}",
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        "닉네임: ${me.name}",
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "프로필 편집",
-                        ),
-                      ),
-                    ],
+              ],
+            )
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "ID: ${me.email}",
+                  style: TextStyle(
+                    fontSize: 15,
                   ),
                 ),
+                SizedBox(
+                  width: 20,
+                )
               ],
             ),
-            divide(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                color: Colors.grey[200]!),
+            SizedBox(
+              height: 6,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "닉네임: ${me.name}",
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "프로필 편집",
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                )
+              ],
+            )
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 180,
+            ),
+            Divider(
+              height: 50,
+              color: Colors.grey[200]!,
+            ),
             Row(
               children: [
                 SizedBox(width: 20),
@@ -89,11 +145,13 @@ class _State extends State<MyCustomerPage> {
                 ),
               ],
             ),
-            divide(
-              margin: EdgeInsets.fromLTRB(0, 20, 0, 80),
+            Divider(
+              height: 50,
               color: Colors.black,
             ),
             Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20),
               height: 50,
               child: TextButton(
                 onPressed: () {},
@@ -101,6 +159,8 @@ class _State extends State<MyCustomerPage> {
               ),
             ),
             Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20),
               height: 40,
               child: TextButton(
                 onPressed: () {},
@@ -108,6 +168,8 @@ class _State extends State<MyCustomerPage> {
               ),
             ),
             Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20),
               height: 40,
               child: TextButton(
                 onPressed: () {},
@@ -115,6 +177,8 @@ class _State extends State<MyCustomerPage> {
               ),
             ),
             Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20),
               height: 54,
               child: TextButton(
                 onPressed: () {},
@@ -122,6 +186,8 @@ class _State extends State<MyCustomerPage> {
               ),
             ),
             Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20),
               height: 40,
               child: TextButton(
                 onPressed: () {},
@@ -129,8 +195,9 @@ class _State extends State<MyCustomerPage> {
               ),
             ),
           ],
-        ),
-      ),
+        )
+      ],
+    )
     );
   }
 }

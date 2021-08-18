@@ -46,18 +46,17 @@ class _LoginState extends State<LoginHome> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 100,
+              height: 60,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
                 child: Container(
-                    width: 200,
-                    height: 150,
+
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('imgs/logo.png')),
+                    child: Image.asset('imgs/logo.png',width: 300,height: 150,fit: BoxFit.cover,)),
               ),
             ),
             SizedBox(
@@ -97,14 +96,15 @@ class _LoginState extends State<LoginHome> {
               onPressed: () {},
               child: Text(
                 'Forgot Password',
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(color: Colors.black, fontSize: 15),
               ),
             ),
+            SizedBox(height: 20,),
             Container(
               height: 50,
-              width: 250,
+              width: 290,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  color: Color(0xff74dfb3), borderRadius: BorderRadius.circular(20),),
               child: TextButton(
                 onPressed: () async {
                   var email = _emailController.text;
@@ -136,9 +136,10 @@ class _LoginState extends State<LoginHome> {
                         "No Account was found matching that username and password");
                   }
                 },
+
                 child: Text(
                   'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: TextStyle(color: Colors.black, fontSize: 25),
                 ),
               ),
             ),
@@ -150,7 +151,7 @@ class _LoginState extends State<LoginHome> {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => SignUp()));
                 },
-                child: Text('New User? Create Account'))
+                child: Text('New User? Create Account', style: TextStyle(color: Colors.black),),)
           ],
         ),
       ),
