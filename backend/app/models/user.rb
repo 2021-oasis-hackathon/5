@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
 	has_many :shops, dependent: :destroy
 	has_many :carts, dependent: :destroy
+	has_many :payments
 
 	validates_presence_of :name, :email, :password_digest, :phone_number, :nickname, :role
 	validates :name, length: { minimum: 2, maximum: 20 }

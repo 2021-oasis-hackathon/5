@@ -48,11 +48,11 @@ class UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:email, :name, :nickname, :password, :password_confirmation, :phone_number, :role)
+		params.require(:user).permit(:email, :name, :nickname, :password, :password_confirmation, :phone_number, :role, :customer_count, :customer_count_max)
 	end
 
 	def user_update_params
-		params.require(:user).permit(:name, :nickname, :phone_number)
+		params.require(:user).permit(:name, :nickname, :phone_number, :customer_count, :customer_count_max)
 	end
 
 	def has_create_authority?
