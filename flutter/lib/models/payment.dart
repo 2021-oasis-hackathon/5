@@ -19,10 +19,10 @@ class Payment {
     return new Payment(
       id: json['id'],
       name: json['name'],
-      price: json['detail'],
-      status: json['latitude'],
-      hostId: json['longitude'],
-      customerId: json['location'],
+      price: json['price'],
+      status: json['status'],
+      hostId: json['hostId'],
+      customerId: json['customerId'],
     );
   }
 }
