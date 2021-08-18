@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:qount/main.dart';
 import 'package:qount/models/shop.dart';
 import 'package:qount/models/user.dart';
-import 'package:qount/screens/menu/menu.dart';
+import 'package:qount/screens/menu/menu_qr.dart';
 import 'package:qount/utils/display.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/material.dart';

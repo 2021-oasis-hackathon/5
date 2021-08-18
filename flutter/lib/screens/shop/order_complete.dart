@@ -67,7 +67,9 @@ class _order_completeState extends State<order_complete> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
                      style: ElevatedButton.styleFrom(
                        primary: Color(0xff74dfb3),
                        minimumSize: Size(double.infinity, 30)
