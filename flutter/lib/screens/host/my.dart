@@ -55,7 +55,7 @@ class _State extends State<MyPage> {
                 Text(
                   '마이페이지',
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
                 )
@@ -125,6 +125,9 @@ class _State extends State<MyPage> {
                 )
               ],
             ),
+            SizedBox(
+              height: 15,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -146,7 +149,7 @@ class _State extends State<MyPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 180,
+              height: 200,
             ),
             Divider(
               height: 50,

@@ -24,7 +24,7 @@ class QRPageGenerator with BasePageGenerator {
       );
   @override
   // TODO: implement label
-  String get label => "마이페이지";
+  String get label => "QR발급";
 }
 
 class QRPage extends StatefulWidget {

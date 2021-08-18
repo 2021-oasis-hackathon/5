@@ -29,7 +29,7 @@ class PhonePageGenerator with BasePageGenerator {
       );
   @override
   // TODO: implement label
-  String get label => "마이페이지";
+  String get label => "연락처 입력";
 }
 
 class PhonePage extends StatefulWidget {
