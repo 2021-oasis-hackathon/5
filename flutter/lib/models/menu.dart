@@ -32,38 +32,46 @@ class Menu {
     );
   }
 
-  Widget toWidgetListItem() {
+  Widget toWidgetListItem(BuildContext context) {
     return Container(
       child: Card(
         child: InkWell(
           onTap: () {},
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Padding(
+                padding: EdgeInsets.all(5),
+              ),
               Container(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  //mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       this.name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 15),
+                      textAlign: TextAlign.left,
                     ),
                     Text(
                       this.price.toString() + "원",
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.left,
                     ),
                   ],
                 ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
               ),
               Container(
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(15.0),
                     child: CachedNetworkImage(
-                      height: 100,
-                      width: 100,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.height * 0.15,
                       imageUrl: this.image,
                       placeholder: (context, url) =>
                           CircularProgressIndicator(),
@@ -80,66 +88,61 @@ class Menu {
     );
   }
 
-  Widget toWidgetRecommend() {
+  Widget toWidgetRecommend(BuildContext context) {
     return Container(
-      width: 300,
+      width: 200,
       padding: EdgeInsets.all(8),
       alignment: Alignment.center,
-      child: Card(
-        child: InkWell(
-          onTap: () {},
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  margin: EdgeInsets.only(top: 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                      height: 70,
-                      imageUrl: this.image,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
-                    ),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                margin: EdgeInsets.only(top: 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: CachedNetworkImage(
+                    height: MediaQuery.of(context).size.width * 0.3,
+                    //width: MediaQuery.of(context).size.width * 0.3,
+                    imageUrl: this.image,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  verticalDirection: VerticalDirection.up,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 10, top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            this.name,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                verticalDirection: VerticalDirection.up,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left: 10, top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          this.name,
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
-                          Text(
-                            this.price.toString(),
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        Text(
+                          this.price.toString() + "원",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

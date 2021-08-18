@@ -42,12 +42,9 @@ class MenuGridViewState extends State<MenuGridView> {
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "${shop.name}",
-            ),
-            Text(
-              "${shop.openTime}",
-            ),
+            Text("${shop.name}",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
           ],
         ),
       ),
@@ -59,7 +56,7 @@ class MenuGridViewState extends State<MenuGridView> {
               title: Text("추천메뉴"),
               children: [
                 Container(
-                  height: 300,
+                  height: 200,
                   child: FutureBuilder<List<Menu>>(
                     future: menusRecommend,
                     builder: (context, snapshot) {
@@ -71,7 +68,8 @@ class MenuGridViewState extends State<MenuGridView> {
                             shrinkWrap: true,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              return snapshot.data![index].toWidgetRecommend();
+                              return snapshot.data![index]
+                                  .toWidgetRecommend(context);
                               //return Card(child: Center(child: Text("dfdf")));
                             },
                           ),
@@ -107,7 +105,8 @@ class MenuGridViewState extends State<MenuGridView> {
                           //           (MediaQuery.of(context).size.height / 7),
                           // ),
                           itemBuilder: (context, index) {
-                            return snapshot.data![index].toWidgetListItem();
+                            return snapshot.data![index]
+                                .toWidgetListItem(context);
                           },
                         );
                       } else if (snapshot.hasError) {

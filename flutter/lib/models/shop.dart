@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
 import 'package:qount/screens/menu/menu.dart';
+import 'package:qount/utils/calculate.dart';
 
 class Shop {
   final int id;
@@ -15,6 +16,7 @@ class Shop {
   final String image;
   final int customerCount;
   final int customerCountMax;
+  final int status;
 
   Shop({
     required this.id,
@@ -28,6 +30,7 @@ class Shop {
     required this.image,
     required this.customerCount,
     required this.customerCountMax,
+    required this.status,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) {
@@ -43,6 +46,7 @@ class Shop {
       image: json['image'],
       customerCount: json['customer_count'],
       customerCountMax: json['customer_count_max'],
+      status: json['status'],
     );
   }
 
@@ -134,7 +138,8 @@ class Shop {
                           ),
                           Row(
                             children: [
-                              Icon(Icons.circle, color: Colors.green, size: 8),
+                              Icon(Icons.circle,
+                                  color: checkCustomerCount(this), size: 8),
                               Text(this.openTime,
                                   style: TextStyle(fontSize: 12)),
                             ],

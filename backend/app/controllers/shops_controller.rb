@@ -46,7 +46,7 @@ class ShopsController < ApplicationController
 	private
 
 	def shop_params
-		params.require(:shop).permit(:name, :detail, :location, :open_time, :latitude, :longitude, :image)
+		params.require(:shop).permit(:name, :detail, :location, :open_time, :latitude, :longitude, :image, :customer_count, :customer_count_max, :status)
 	end
 
 	def has_update_authority?(shop)
