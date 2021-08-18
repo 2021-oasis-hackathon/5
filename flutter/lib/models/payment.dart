@@ -17,12 +17,12 @@ class Payment {
 
   factory Payment.fromJson(Map<String, dynamic> json) {
     return new Payment(
-      id: json['id'],
+      id: int.parse(json['id']),
       name: json['name'],
-      price: json['price'],
+      price: int.parse(json['price']),
       status: json['status'],
-      hostId: json['hostId'],
-      customerId: json['customerId'],
+      hostId: int.parse(json['hostId']),
+      customerId: int.parse(json['customerId']),
     );
   }
 }

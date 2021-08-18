@@ -129,7 +129,7 @@ class _Googlemap_homeState extends State<Googlemap_home> {
                 markers: Set.from(_markers),
               );
             } else if (snapshot.hasError) {}
-            return CircularProgressIndicator();
+            return Container();
           },
         ),
         // GoogleMap(

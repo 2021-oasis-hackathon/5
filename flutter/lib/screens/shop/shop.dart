@@ -56,7 +56,7 @@ class ShopGridViewState extends State<ShopGridView> {
             } else if (snapshot.hasError) {
               return Text("Error - SnapGridViewState");
             }
-            return CircularProgressIndicator();
+            return Container();
           },
         ),
       ),

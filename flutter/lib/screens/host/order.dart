@@ -49,14 +49,13 @@ class OrderPage extends StatefulWidget {
 
 class _State extends State<OrderPage> {
   UserMe me;
-  late Future<List<Payment>> payments;
+  //late Future<List<Payment>> payments;
 
   _State({required this.me});
 
   @override
   void initState() {
     super.initState();
-    payments = fetchShops();
   }
 
   @override
@@ -67,7 +66,7 @@ class _State extends State<OrderPage> {
       ),
       body: Container(
         child: FutureBuilder<List<Payment>>(
-          future: payments,
+          future: fetchShops(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -82,7 +81,7 @@ class _State extends State<OrderPage> {
             } else if (snapshot.hasError) {
               return Text("Error - SnapGridViewState");
             }
-            return CircularProgressIndicator();
+            return Container();
           },
         ),
       ),
@@ -156,13 +155,13 @@ class _State extends State<OrderPage> {
       Uri.parse("$SERVER_IP/payments"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "${me.jwt}"
+        "Authorization": "${this.me.jwt}"
       },
     );
     if (res.statusCode == 200) {
       Iterable list = json.decode(res.body);
-      List<Payment> payments =
-          list.map((pay) => Payment.fromJson(pay)).toList();
+
+      var payments = list.map((pay) => Payment.fromJson(pay)).toList();
       return payments;
     } else {
       displayDialog(

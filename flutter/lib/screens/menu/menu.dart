@@ -47,11 +47,13 @@ class MenuGridViewState extends State<MenuGridView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
-                SizedBox(width: 15,),
-                Text("${shop.customerCount} / ${shop.customerCountMax}",style: TextStyle(fontSize: 14))
+                SizedBox(
+                  width: 15,
+                ),
+                Text("${shop.customerCount} / ${shop.customerCountMax}",
+                    style: TextStyle(fontSize: 14))
               ],
             )
-
           ],
         ),
       ),
@@ -84,7 +86,7 @@ class MenuGridViewState extends State<MenuGridView> {
                       } else if (snapshot.hasError) {
                         return Text("Error - SnapGridViewState");
                       }
-                      return CircularProgressIndicator();
+                      return Container();
                     },
                   ),
                 ),
@@ -119,7 +121,7 @@ class MenuGridViewState extends State<MenuGridView> {
                       } else if (snapshot.hasError) {
                         return Text("Error - SnapGridViewState");
                       }
-                      return CircularProgressIndicator();
+                      return Container();
                     },
                   ),
                 ),

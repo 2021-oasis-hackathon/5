@@ -90,7 +90,7 @@ class MenuGridViewState extends State<MenuGridView> {
                       } else if (snapshot.hasError) {
                         return Text("Error - SnapGridViewState");
                       }
-                      return CircularProgressIndicator();
+                      return Container();
                     },
                   ),
                 ),
@@ -125,7 +125,7 @@ class MenuGridViewState extends State<MenuGridView> {
                       } else if (snapshot.hasError) {
                         return Text("Error - SnapGridViewState");
                       }
-                      return CircularProgressIndicator();
+                      return Container();
                     },
                   ),
                 ),
