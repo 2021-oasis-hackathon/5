@@ -20,12 +20,16 @@ class order extends StatefulWidget {
 }
 
 class _orderState extends State<order> {
+  bool here_pressed = false;
+  bool togo_pressed = false;
   String here_or_togo = 'here';
-  int id = 1;
   int count = 0;
+  List<int> counts = [];
   bool _is_switched = false;
-  int billing = 1;
-  String pay = "mobile";
+
+  bool mobile = false;
+  bool card = false;
+  bool cash = false;
 
   void _add() {
     setState(() {
@@ -43,7 +47,65 @@ class _orderState extends State<order> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      here_pressed = false;
+      togo_pressed = false;
+      mobile = card = cash = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    void _here_change_pressed() {
+      setState(() {
+        if (here_pressed) {
+          return;
+        } else {
+          here_pressed = true;
+          togo_pressed = false;
+        }
+      });
+    }
+
+    void _togo_change_pressed() {
+      setState(() {
+        if (togo_pressed) {
+          return;
+        } else {
+          togo_pressed = true;
+          here_pressed = false;
+        }
+      });
+    }
+
+    void _mobile_pressed(){
+      setState(() {
+        if (!mobile){
+          mobile = true;
+          card = cash = false;
+        }
+      });
+    }
+    void _card_pressed(){
+      setState(() {
+        if (!card){
+          card = true;
+          mobile = cash = false;
+        }
+      });
+    }
+    void _cash_pressed(){
+      setState(() {
+        if (!cash){
+          cash = true;
+          card = mobile = false;
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('주문하기'),
@@ -53,95 +115,48 @@ class _orderState extends State<order> {
       body: Column(
         children: [
           SizedBox(
-            height: 15,
+            height: 25,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Radio(
-                  value: 1,
-                  groupValue: id,
-                  onChanged: (val) {
-                    setState(() {
-                      here_or_togo = 'here';
-                      id = 1;
-                    });
-                  }),
-              Text('매장'),
+              TextButton(
+                  onPressed: () => _here_change_pressed(),
+                  child: Text(
+                    '매장',
+                    style: here_pressed
+                        ? TextStyle(color: Color(0xff74dfb3), fontSize: 20)
+                        : TextStyle(color: Colors.grey, fontSize: 20),
+                  )),
               SizedBox(
-                width: 130,
+                width: 150,
               ),
-              Radio(
-                  value: 2,
-                  groupValue: id,
-                  onChanged: (val) {
-                    setState(() {
-                      here_or_togo = 'togo';
-                      id = 2;
-                    });
-                  }),
-              Text('포장')
+              TextButton(
+                  onPressed: () => _togo_change_pressed(),
+                  child: Text(
+                    '포장',
+                    style: togo_pressed
+                        ? TextStyle(color: Color(0xff74dfb3), fontSize: 20)
+                        : TextStyle(color: Colors.grey, fontSize: 20),
+                  )),
             ],
           ),
+
           SizedBox(
-            height: 20,
+            height: 25,
           ),
           //주문 리스트 위젯
-          Stack(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 30,),
-                      Text('test_menu1',style: TextStyle(fontSize: 20),),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 30,),
-                      Text('test_price1',style: TextStyle(fontSize: 20)),
-                    ],
-                  ),
-                ],
+              _build_order_information(), //객체 생성 함수
+              SizedBox(
+                height: 30,
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-
-                    mini: true,
-                    onPressed: _minus,
-                    child: Icon(Icons.subdirectory_arrow_left),
-                    backgroundColor: Color(0xff87dfb3),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    '$count',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  FloatingActionButton(
-                    onPressed: _add,
-                    child: Icon(Icons.add),
-                    mini: true,
-                    backgroundColor: Color(0xff87dfb3),
-                  )
-                ],
-              )
+              _build_order_information(),
 
             ],
           ),
-
 
           //주문하기 구분선...
           Divider(
@@ -174,71 +189,71 @@ class _orderState extends State<order> {
             children: [
               Text('결제수단'),
               SizedBox(
-                width: 80,
+                width: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Radio(
-                      value: 3,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'mobile';
-                          billing = 3;
-                        });
-                      }),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Radio(
-                      value: 4,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'card';
-                          billing = 4;
-                        });
-                      }),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Radio(
-                      value: 5,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'cash';
-                          billing = 5;
-                        });
-                      })
+                  TextButton(
+                      onPressed: () => _mobile_pressed(),
+                      child: Text(
+                        '모바일',
+                        style: mobile
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
+
+                  TextButton(
+                      onPressed: () => _card_pressed(),
+                      child: Text(
+                        '카드',
+                        style: card
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
+                  TextButton(
+                      onPressed: () => _cash_pressed(),
+                      child: Text(
+                        '현금',
+                        style: cash
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
+
                 ],
               )
-
             ],
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           //총 구문 금액
           Stack(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 30,),
-                  Text('총 주문 금액',style: TextStyle(fontSize: 15),)
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '총 주문 금액',
+                    style: TextStyle(fontSize: 15),
+                  )
                 ],
-
-
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('20000000원',
-                  style: TextStyle(fontSize: 15),),
-                  SizedBox(width: 45,)
+                  Text(
+                    '20000000원',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  SizedBox(
+                    width: 45,
+                  )
                 ],
               )
-
             ],
           ),
 
@@ -246,14 +261,94 @@ class _orderState extends State<order> {
           ButtonBar(
             alignment: MainAxisAlignment.center,
             buttonHeight: 20.0,
-
           )
-
-          
-
-         
         ],
       ),
+    );
+  }
+
+  Widget _build_order_information() {
+    int count = 0;
+    counts.add(count);
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
+                Text(
+                  'test_menu1',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
+                Text('test_price1', style: TextStyle(fontSize: 15)),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 2,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      mini: true,
+                      onPressed: _minus,
+                      child: Icon(Icons.subdirectory_arrow_left),
+                      backgroundColor: Color(0xff87dfb3),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  '$count',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Container(
+                  height: 30,
+                  width: 30,
+                  child: FittedBox(
+                      child: FloatingActionButton(
+                    onPressed: _add,
+                    child: Icon(Icons.add),
+                    mini: true,
+                    backgroundColor: Color(0xff87dfb3),
+                  )),
+                ),
+                SizedBox(
+                  width: 30,
+                )
+              ],
+            )
+          ],
+        )
+      ],
     );
   }
 }

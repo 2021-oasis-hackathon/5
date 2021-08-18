@@ -69,7 +69,7 @@ class _order_completeState extends State<order_complete> {
                   child: ElevatedButton(
                     onPressed: (){},
                      style: ElevatedButton.styleFrom(
-                       primary: Color(0xff87dfb3),
+                       primary: Color(0xff74dfb3),
                        minimumSize: Size(300.0,30.0)
                      ),
                     child: Text('확인'),
