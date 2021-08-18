@@ -6,14 +6,13 @@ import 'screens/home/Qr_reading.dart';
 import 'screens/home/map.dart';
 import 'package:camera/camera.dart';
 import 'screens/home/slidingup_panel.dart';
-
-//const SERVER_IP = 'https://qount.run.goorm.io';
-const SERVER_IP = "http://10.0.2.2:3000";
+const SERVER_IP = 'https://qount.run.goorm.io';
+//const SERVER_IP = "http://10.0.2.2:3000";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(Login());
 }
 
 class MyApp extends StatelessWidget {
