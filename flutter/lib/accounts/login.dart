@@ -97,7 +97,7 @@ class _LoginState extends State<LoginHome> {
               onPressed: () {},
               child: Text(
                 'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+                style: TextStyle(fontSize: 15),
               ),
             ),
             Container(

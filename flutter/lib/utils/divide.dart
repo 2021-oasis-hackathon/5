@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget divide({
-  required EdgeInsets margin,
-}) {
+Widget divide({required EdgeInsets margin, required Color color}) {
   return Container(
     decoration: BoxDecoration(
       border: Border(
         top: BorderSide(
-          color: Colors.grey[300]!,
+          color: color,
         ),
       ),
     ),

@@ -13,7 +13,6 @@ class ShopGridView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    print("yes ok");
     return ShopGridViewState(this.me);
   }
 }
@@ -40,6 +39,8 @@ class ShopGridViewState extends State<ShopGridView> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return GridView.builder(
+                //physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: false,
                 itemCount: snapshot.data!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

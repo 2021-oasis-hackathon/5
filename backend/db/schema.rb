@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_081141) do
+ActiveRecord::Schema.define(version: 2021_08_18_093602) do
 
   create_table "carts", force: :cascade do |t|
     t.integer "price"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_081141) do
     t.integer "host_id"
     t.integer "customer_count"
     t.integer "customer_count_max"
+    t.integer "status"
   end
 
   create_table "users", force: :cascade do |t|

@@ -5,7 +5,7 @@ class Shop < ApplicationRecord
 	has_many :payment
 	belongs_to :host, class_name: "User"
 
-	validates_presence_of :name, :detail, :location, :open_time, :latitude, :longitude, :image, :customer_count, :customer_count_max
+	validates_presence_of :name, :detail, :location, :open_time, :latitude, :longitude, :image, :customer_count, :customer_count_max, :status
 	validates :name, length: { minimum: 2, maximum: 20 }
 	validates :detail, length: { maximum: 200 }
 	validates :location, length: { maximum: 200 }
