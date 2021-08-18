@@ -149,7 +149,7 @@ class MenuGridViewState extends State<MenuGridView> {
       Uri.parse("$SERVER_IP/shops/${shop.id}/menus"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "${this.me.jwt}"
+        //"Authorization": "${me.jwt}"
       },
     );
     if (res.statusCode == 200) {
@@ -169,7 +169,7 @@ class MenuGridViewState extends State<MenuGridView> {
       Uri.parse("$SERVER_IP/shops/${shop.id}/menus"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "${this.me.jwt}"
+        //"Authorization": "${me.jwt}"
       },
     );
     if (res.statusCode == 200) {
