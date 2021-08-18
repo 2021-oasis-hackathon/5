@@ -24,11 +24,13 @@ class OrderPageGenerator with BasePageGenerator {
 
   @override
   // TODO: implement icon
-  Icon get icon => Icon(Icons.ac_unit);
-
+  Image get icon => Image.asset(
+        "imgs/icon1.png",
+        height: 50,
+      );
   @override
   // TODO: implement label
-  String get label => "주문현황";
+  String get label => "마이페이지";
 }
 
 class OrderPage extends StatefulWidget {

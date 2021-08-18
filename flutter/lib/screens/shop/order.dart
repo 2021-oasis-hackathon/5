@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
 import 'package:qount/models/user.dart';
 
-
 //void main() => runApp(order_home());
-
 
 class order_home extends StatelessWidget {
   UserMe me;
@@ -39,7 +37,6 @@ class _orderState extends State<order> {
   bool cash = false;
   int total_price = 0;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -54,7 +51,6 @@ class _orderState extends State<order> {
 
   @override
   Widget build(BuildContext context) {
-
     void _here_change_pressed() {
       setState(() {
         if (here_pressed) {
@@ -77,25 +73,27 @@ class _orderState extends State<order> {
       });
     }
 
-    void _mobile_pressed(){
+    void _mobile_pressed() {
       setState(() {
-        if (!mobile){
+        if (!mobile) {
           mobile = true;
           card = cash = false;
         }
       });
     }
-    void _card_pressed(){
+
+    void _card_pressed() {
       setState(() {
-        if (!card){
+        if (!card) {
           card = true;
           mobile = cash = false;
         }
       });
     }
-    void _cash_pressed(){
+
+    void _cash_pressed() {
       setState(() {
-        if (!cash){
+        if (!cash) {
           cash = true;
           card = mobile = false;
         }
@@ -145,16 +143,12 @@ class _orderState extends State<order> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(Cart cart in me.Carts)
-                _build_order_information(cart),
-                SizedBox(height: 30,)
-
-
+              for (Cart cart in me.Carts) _build_order_information(cart),
+              SizedBox(
+                height: 30,
+              )
 
               //객체 생성 함수
-
-
-
             ],
           ),
 
@@ -202,7 +196,6 @@ class _orderState extends State<order> {
                             ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
                             : TextStyle(color: Colors.grey, fontSize: 15),
                       )),
-
                   TextButton(
                       onPressed: () => _card_pressed(),
                       child: Text(
@@ -219,7 +212,6 @@ class _orderState extends State<order> {
                             ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
                             : TextStyle(color: Colors.grey, fontSize: 15),
                       )),
-
                 ],
               )
             ],
@@ -270,15 +262,14 @@ class _orderState extends State<order> {
   Widget _build_order_information(Cart cart) {
     total_price += cart.price * cart.count;
 
-
-    void _add(){
+    void _add() {
       cart.count++;
       setState(() {
         total_price += cart.price;
       });
-
     }
-    void _minus(){
+
+    void _minus() {
       cart.count--;
       setState(() {
         total_price -= cart.price;
@@ -351,11 +342,11 @@ class _orderState extends State<order> {
                     width: 30,
                     child: FittedBox(
                         child: FloatingActionButton(
-                          onPressed: _add,
-                          child: Icon(Icons.add),
-                          mini: true,
-                          backgroundColor: Color(0xff87dfb3),
-                        )),
+                      onPressed: _add,
+                      child: Icon(Icons.add),
+                      mini: true,
+                      backgroundColor: Color(0xff87dfb3),
+                    )),
                   ),
                   SizedBox(
                     width: 30,
@@ -367,7 +358,5 @@ class _orderState extends State<order> {
         ],
       ),
     );
-
-
   }
 }

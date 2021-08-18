@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
 import 'package:qount/screens/home/map.dart';
 import 'package:qount/screens/host/main.dart';
+import 'package:qount/screens/shop/order.dart';
 import 'package:qount/screens/shop/shop.dart';
 import 'package:qount/utils/display.dart';
 import '../main.dart';
@@ -136,7 +137,8 @@ class _LoginState extends State<LoginHome> {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           // builder: (context) => ShopGridView(me: user)));
                           //builder: (context) => ShopGridView(me: user)));
-                          builder: (context) => sliding_home(me: user)));
+                          //builder: (context) => sliding_home(me: user)));
+                          builder: (context) => order_home(me: user)));
                     }
 
                     // });

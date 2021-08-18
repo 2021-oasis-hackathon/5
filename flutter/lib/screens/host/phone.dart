@@ -23,11 +23,13 @@ class PhonePageGenerator with BasePageGenerator {
 
   @override
   // TODO: implement icon
-  Icon get icon => Icon(Icons.ac_unit);
-
+  Image get icon => Image.asset(
+        "imgs/icon1.png",
+        height: 50,
+      );
   @override
   // TODO: implement label
-  String get label => "연락처 입력";
+  String get label => "마이페이지";
 }
 
 class PhonePage extends StatefulWidget {
@@ -38,8 +40,6 @@ class PhonePage extends StatefulWidget {
 }
 
 class _State extends State<PhonePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,17 +48,19 @@ class _State extends State<PhonePage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 200,),
+          SizedBox(
+            height: 200,
+          ),
           Text('번호를 입력한 뒤 확인 버튼을 눌러주세요'),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Phone number',
             ),
             keyboardType: TextInputType.number,
-
-
           )
         ],
       ),
