@@ -94,7 +94,8 @@ class Menu {
       padding: EdgeInsets.all(8),
       alignment: Alignment.center,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+        },
         child: Column(
           children: <Widget>[
             Align(

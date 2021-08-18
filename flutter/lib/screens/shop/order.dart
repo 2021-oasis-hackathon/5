@@ -37,27 +37,15 @@ class _orderState extends State<order> {
   bool mobile = false;
   bool card = false;
   bool cash = false;
+  int total_price = 0;
 
-  void _add() {
-    setState(() {
-      count++;
-    });
-  }
-
-  void _minus() {
-    setState(() {
-      if (count == 0) {
-        return;
-      }
-      count--;
-    });
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
+      total_price = 0;
       here_pressed = false;
       togo_pressed = false;
       mobile = card = cash = false;
@@ -157,11 +145,15 @@ class _orderState extends State<order> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _build_order_information(), //객체 생성 함수
-              SizedBox(
-                height: 30,
-              ),
-              _build_order_information(),
+              for(Cart cart in me.Carts)
+                _build_order_information(cart),
+                SizedBox(height: 30,)
+
+
+
+              //객체 생성 함수
+
+
 
             ],
           ),
@@ -254,7 +246,7 @@ class _orderState extends State<order> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    '20000000원',
+                    '$total_price',
                     style: TextStyle(fontSize: 15),
                   ),
                   SizedBox(
@@ -275,88 +267,107 @@ class _orderState extends State<order> {
     );
   }
 
-  Widget _build_order_information() {
-    int count = 0;
-    counts.add(count);
-    return Stack(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  'test_menu1',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text('test_price1', style: TextStyle(fontSize: 15)),
-              ],
-            ),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SizedBox(
-              height: 2,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 30,
-                  width: 30,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      mini: true,
-                      onPressed: _minus,
-                      child: Icon(Icons.subdirectory_arrow_left),
-                      backgroundColor: Color(0xff87dfb3),
+  Widget _build_order_information(Cart cart) {
+    total_price += cart.price * cart.count;
+
+
+    void _add(){
+      cart.count++;
+      setState(() {
+        total_price += cart.price;
+      });
+
+    }
+    void _minus(){
+      cart.count--;
+      setState(() {
+        total_price -= cart.price;
+      });
+    }
+
+    return Container(
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '${cart.menu}',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text('${cart.price}', style: TextStyle(fontSize: 15)),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        mini: true,
+                        onPressed: _minus,
+                        child: Icon(Icons.subdirectory_arrow_left),
+                        backgroundColor: Color(0xff87dfb3),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  '$count',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  height: 30,
-                  width: 30,
-                  child: FittedBox(
-                      child: FloatingActionButton(
-                    onPressed: _add,
-                    child: Icon(Icons.add),
-                    mini: true,
-                    backgroundColor: Color(0xff87dfb3),
-                  )),
-                ),
-                SizedBox(
-                  width: 30,
-                )
-              ],
-            )
-          ],
-        )
-      ],
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    '${cart.count}',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                        child: FloatingActionButton(
+                          onPressed: _add,
+                          child: Icon(Icons.add),
+                          mini: true,
+                          backgroundColor: Color(0xff87dfb3),
+                        )),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  )
+                ],
+              )
+            ],
+          )
+        ],
+      ),
     );
+
+
   }
 }

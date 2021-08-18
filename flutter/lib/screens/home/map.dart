@@ -102,7 +102,7 @@ class _Googlemap_homeState extends State<Googlemap_home> {
   @override
   Widget build(BuildContext context) {
     final CameraPosition _kGooglePlex = CameraPosition(
-      target: LatLng(37.4537251, 126.7960716),
+      target: LatLng(35.146896, 126.922292),
       zoom: 14.4746,
     );
 
