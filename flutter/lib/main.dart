@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:qount/accounts/login.dart';
+import 'package:qount/screens/shop/order.dart';
 import 'screens/home/Qr_reading.dart';
 import 'screens/home/map.dart';
 import 'package:camera/camera.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Googlemap_home(),
+      home: LoginHome(),
     );
   }
 }
