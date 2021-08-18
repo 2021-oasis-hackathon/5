@@ -17,14 +17,27 @@ class Googlemap_home extends StatefulWidget {
 }
 
 class _Googlemap_homeState extends State<Googlemap_home> {
-  List<Marker> _markers = [];
+  Set<Marker> _markers = {};
   late BitmapDescriptor icon;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'imgs/logo1.png')
-        .then((value) => icon = value);
+    setCustomMarker();
+  }
+  void setCustomMarker() async{
+    icon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'imgs/logo1.png');
+  }
+  void _onMapCreated(GoogleMapController controller){
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId('id'),
+        position: LatLng(37.4537251, 126.7960716),
+        icon: icon,
+
+      ));
+    });
   }
 
   @override
@@ -41,19 +54,17 @@ class _Googlemap_homeState extends State<Googlemap_home> {
       fit: StackFit.expand,
       children: [
         GoogleMap(
+
+          mapToolbarEnabled: false,
+          zoomControlsEnabled: false,
           mapType: MapType.normal,
           initialCameraPosition: _kGooglePlex,
           onCameraMove: (_) {},
           myLocationButtonEnabled: false,
-          onMapCreated: (GoogleMapController sc) {
-            setState(() {
-              // _markers.add(Marker(
-              //     markerId: MarkerId('Google'),
-              //     draggable: false,
-              //     icon: icon,
-              //     position: LatLng(37.4537251, 126.7960716)));
-            });
-          },
+
+          onMapCreated: _onMapCreated,
+
+
           markers: Set.from(_markers),
         ),
         FloatingSearchBar(
