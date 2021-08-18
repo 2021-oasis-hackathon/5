@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
@@ -269,6 +271,7 @@ class _orderState extends State<order> {
               onPressed: () async {
                 int status;
                 int stop = 0;
+                putShop(me.id, shop);
                 for (Cart cart in me.Carts) {
                   status = await postPayment(cart, me.id, shop.hostId);
                   if (status != 201) {
@@ -300,6 +303,15 @@ class _orderState extends State<order> {
       headers: {"Content-Type": "application/json"},
       body: cart.toJson(customerId, hostId),
     );
+    return res.statusCode;
+  }
+
+  Future<int> putShop(int customerId, Shop shop) async {
+    var res = await http.post(Uri.parse('$SERVER_IP/shop/${shop.id}'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "shop": {"customer_count": (shop.customerCount + 1).toString()}
+        }));
     return res.statusCode;
   }
 
