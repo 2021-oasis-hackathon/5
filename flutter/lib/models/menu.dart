@@ -105,7 +105,7 @@ class Menu {
                   borderRadius: BorderRadius.circular(5),
                   child: CachedNetworkImage(
                     height: MediaQuery.of(context).size.width * 0.3,
-                    //width: MediaQuery.of(context).size.width * 0.3,
+                    fit: BoxFit.fitWidth,
                     imageUrl: this.image,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => new Icon(Icons.error),

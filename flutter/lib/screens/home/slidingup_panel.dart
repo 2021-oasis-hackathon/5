@@ -93,7 +93,7 @@ class _slidingState extends State<sliding> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
           body: Center(
-            child: Googlemap_home(),
+            child: Googlemap_home(me: me),
           ),
         ),
         bottomNavigationBar: SizedBox(
