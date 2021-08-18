@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
 import 'package:qount/models/user.dart';
+import 'package:qount/screens/shop/order_complete.dart';
 
 //void main() => runApp(order_home());
 
@@ -46,6 +47,9 @@ class _orderState extends State<order> {
       here_pressed = false;
       togo_pressed = false;
       mobile = card = cash = false;
+      for (Cart cart in me.Carts) {
+        total_price += cart.price;
+      }
     });
   }
 
@@ -143,7 +147,8 @@ class _orderState extends State<order> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (Cart cart in me.Carts) _build_order_information(cart),
+              for (Cart cart in me.Carts)
+                _build_order_information(me.Carts.indexOf(cart), cart),
               SizedBox(
                 height: 30,
               )
@@ -248,30 +253,37 @@ class _orderState extends State<order> {
               )
             ],
           ),
+          SizedBox(height: 233),
 
           //결제하기 버튼
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            buttonHeight: 20.0,
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => order_complete_home()));
+            },
+            child: Text('결제하기'),
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+                primary: Color(0xff74dfb3)),
           )
         ],
       ),
     );
   }
 
-  Widget _build_order_information(Cart cart) {
-    total_price += cart.price * cart.count;
+  Widget _build_order_information(int index, Cart cart) {
+    //total_price += cart.price * cart.count;
 
     void _add() {
-      cart.count++;
       setState(() {
+        cart.count++;
         total_price += cart.price;
       });
     }
 
     void _minus() {
-      cart.count--;
       setState(() {
+        cart.count--;
         total_price -= cart.price;
       });
     }
