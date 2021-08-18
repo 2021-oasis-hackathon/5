@@ -13,17 +13,22 @@ class Shop {
   final String openTime;
   final int orderCount;
   final String image;
+  final int customerCount;
+  final int customerCountMax;
 
-  Shop(
-      {required this.id,
-      required this.name,
-      required this.detail,
-      required this.latitude,
-      required this.longitude,
-      required this.location,
-      required this.openTime,
-      required this.orderCount,
-      required this.image});
+  Shop({
+    required this.id,
+    required this.name,
+    required this.detail,
+    required this.latitude,
+    required this.longitude,
+    required this.location,
+    required this.openTime,
+    required this.orderCount,
+    required this.image,
+    required this.customerCount,
+    required this.customerCountMax,
+  });
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     return new Shop(
@@ -36,6 +41,8 @@ class Shop {
       openTime: json['open_time'],
       orderCount: json['order_count'],
       image: json['image'],
+      customerCount: json['customer_count'],
+      customerCountMax: json['customer_count_max'],
     );
   }
 
