@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
+import 'package:qount/screens/home/map.dart';
 import 'package:qount/screens/shop/shop.dart';
 import 'package:qount/utils/display.dart';
 import '../main.dart';
@@ -35,6 +36,7 @@ class LoginHome extends StatefulWidget {
 class _LoginState extends State<LoginHome> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool isClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +111,16 @@ class _LoginState extends State<LoginHome> {
                   var password = _passwordController.text;
                   var user = await attemptLogIn(email, password);
                   if (user.jwt != "") {
-                    SchedulerBinding.instance!
-                        .addPostFrameCallback((timeStamp) {
-                      // user as argumnet
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => ShopGridView(me: user)));
-                    });
+                    print("is ok?");
+                    // SchedulerBinding.instance!
+                    //     .addPostFrameCallback((timeStamp) {
+                    //   // user as argumnet
+
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        // builder: (context) => ShopGridView(me: user)));
+                        builder: (context) => ShopGridView(me: user)));
+
+                    // });
                   } else {
                     displayDialog(context, "An Error Occurred",
                         "No Account was found matching that username and password");
@@ -156,6 +162,7 @@ class _LoginState extends State<LoginHome> {
     );
     if (res.statusCode == 200) {
       var j = json.decode(res.body);
+
       UserMe me = UserMe(
         id: j['id'],
         jwt: j['auth_token'],

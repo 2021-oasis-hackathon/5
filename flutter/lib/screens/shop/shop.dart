@@ -13,6 +13,7 @@ class ShopGridView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
+    print("yes ok");
     return ShopGridViewState(this.me);
   }
 }
@@ -26,6 +27,7 @@ class ShopGridViewState extends State<ShopGridView> {
   @override
   void initState() {
     super.initState();
+    print("init...");
     shops = fetchShops(this.me);
   }
 
