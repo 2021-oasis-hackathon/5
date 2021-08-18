@@ -1,31 +1,38 @@
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
+import 'package:qount/models/shop.dart';
 import 'package:qount/models/user.dart';
 import 'package:qount/screens/shop/order_complete.dart';
+
+import '../../main.dart';
 
 //void main() => runApp(order_home());
 
 class order_home extends StatelessWidget {
   UserMe me;
-  order_home({required this.me});
+  Shop shop;
+  order_home({required this.me, required this.shop});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: order(me: me));
+    return MaterialApp(home: order(me: me, shop: shop));
   }
 }
 
 class order extends StatefulWidget {
   UserMe me;
-  order({required this.me});
+  Shop shop;
+  order({required this.me, required this.shop});
 
   @override
-  _orderState createState() => _orderState(me: me);
+  _orderState createState() => _orderState(me: me, shop: shop);
 }
 
 class _orderState extends State<order> {
   UserMe me;
-  _orderState({required this.me});
+  Shop shop;
+  _orderState({required this.me, required this.shop});
   bool here_pressed = false;
   bool togo_pressed = false;
   String here_or_togo = 'here';
@@ -259,9 +266,18 @@ class _orderState extends State<order> {
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => order_complete_home(me:me)));
+              onPressed: () async {
+                int status;
+                int stop = 0;
+                for (Cart cart in me.Carts) {
+                  status = await postPayment(cart, me.id, shop.id);
+                  if (status != 201) {
+                    stop = 1;
+                  }
+                }
+                if (stop == 0)
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => order_complete_home(me: me)));
               },
               child: Text('결제하기'),
               style: ElevatedButton.styleFrom(
@@ -269,10 +285,22 @@ class _orderState extends State<order> {
                   primary: Color(0xff74dfb3)),
             ),
           )
-
         ],
       ),
     );
+  }
+
+  Future<int> postPayment(
+    Cart cart,
+    int customerId,
+    int hostId,
+  ) async {
+    var res = await http.post(
+      Uri.parse('$SERVER_IP/payments'),
+      headers: {"Content-Type": "application/json"},
+      body: cart.toJson(customerId, hostId),
+    );
+    return res.statusCode;
   }
 
   Widget _build_order_information(int index, Cart cart) {

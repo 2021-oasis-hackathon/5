@@ -25,6 +25,4 @@ class Payment {
       customerId: json['customerId'],
     );
   }
-
-  toList() {}
 }

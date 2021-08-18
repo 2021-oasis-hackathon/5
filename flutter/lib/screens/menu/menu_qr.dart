@@ -39,29 +39,28 @@ class MenuGridViewState extends State<MenuGridView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${shop.name}",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
-                  SizedBox(width: 15,),
-
-                  Text("${shop.customerCount} / ${shop.customerCountMax}",style: TextStyle(fontSize: 14))
-                ],
-              )
-
-            ],
-          ),
-        )
-
-
-      ),
+          centerTitle: true,
+          title: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("${shop.name}",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text("${shop.customerCount} / ${shop.customerCountMax}",
+                        style: TextStyle(fontSize: 14))
+                  ],
+                )
+              ],
+            ),
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -137,8 +136,8 @@ class MenuGridViewState extends State<MenuGridView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => order_home(me: me)));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => order_home(me: me, shop: shop)));
         },
         child: Icon(Icons.shopping_cart),
       ),
