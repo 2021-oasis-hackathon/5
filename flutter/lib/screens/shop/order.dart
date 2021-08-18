@@ -1,49 +1,118 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:qount/accounts/login.dart';
+import 'package:qount/models/shop.dart';
+import 'package:qount/models/user.dart';
+import 'package:qount/screens/shop/order_complete.dart';
 
-void main() => runApp(order_home());
+import '../../main.dart';
+
+//void main() => runApp(order_home());
 
 class order_home extends StatelessWidget {
-  const order_home({Key? key}) : super(key: key);
+  UserMe me;
+  Shop shop;
+  order_home({required this.me, required this.shop});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: order());
+    return MaterialApp(home: order(me: me, shop: shop));
   }
 }
 
 class order extends StatefulWidget {
-  const order({Key? key}) : super(key: key);
+  UserMe me;
+  Shop shop;
+  order({required this.me, required this.shop});
 
   @override
-  _orderState createState() => _orderState();
+  _orderState createState() => _orderState(me: me, shop: shop);
 }
 
 class _orderState extends State<order> {
+  UserMe me;
+  Shop shop;
+  _orderState({required this.me, required this.shop});
+  bool here_pressed = false;
+  bool togo_pressed = false;
   String here_or_togo = 'here';
-  int id = 1;
   int count = 0;
+  List<int> counts = [];
   bool _is_switched = false;
-  int billing = 1;
-  String pay = "mobile";
 
-  void _add() {
-    setState(() {
-      count++;
-    });
-  }
+  bool mobile = false;
+  bool card = false;
+  bool cash = false;
+  int total_price = 0;
 
-  void _minus() {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     setState(() {
-      if (count == 0) {
-        return;
+      total_price = 0;
+      here_pressed = false;
+      togo_pressed = false;
+      mobile = card = cash = false;
+      for (Cart cart in me.Carts) {
+        total_price += cart.price;
       }
-      count--;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    void _here_change_pressed() {
+      setState(() {
+        if (here_pressed) {
+          return;
+        } else {
+          here_pressed = true;
+          togo_pressed = false;
+        }
+      });
+    }
+
+    void _togo_change_pressed() {
+      setState(() {
+        if (togo_pressed) {
+          return;
+        } else {
+          togo_pressed = true;
+          here_pressed = false;
+        }
+      });
+    }
+
+    void _mobile_pressed() {
+      setState(() {
+        if (!mobile) {
+          mobile = true;
+          card = cash = false;
+        }
+      });
+    }
+
+    void _card_pressed() {
+      setState(() {
+        if (!card) {
+          card = true;
+          mobile = cash = false;
+        }
+      });
+    }
+
+    void _cash_pressed() {
+      setState(() {
+        if (!cash) {
+          cash = true;
+          card = mobile = false;
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('주문하기'),
@@ -53,95 +122,49 @@ class _orderState extends State<order> {
       body: Column(
         children: [
           SizedBox(
-            height: 15,
+            height: 25,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Radio(
-                  value: 1,
-                  groupValue: id,
-                  onChanged: (val) {
-                    setState(() {
-                      here_or_togo = 'here';
-                      id = 1;
-                    });
-                  }),
-              Text('매장'),
+              TextButton(
+                  onPressed: () => _here_change_pressed(),
+                  child: Text(
+                    '매장',
+                    style: here_pressed
+                        ? TextStyle(color: Color(0xff74dfb3), fontSize: 20)
+                        : TextStyle(color: Colors.grey, fontSize: 20),
+                  )),
               SizedBox(
-                width: 130,
+                width: 150,
               ),
-              Radio(
-                  value: 2,
-                  groupValue: id,
-                  onChanged: (val) {
-                    setState(() {
-                      here_or_togo = 'togo';
-                      id = 2;
-                    });
-                  }),
-              Text('포장')
+              TextButton(
+                  onPressed: () => _togo_change_pressed(),
+                  child: Text(
+                    '포장',
+                    style: togo_pressed
+                        ? TextStyle(color: Color(0xff74dfb3), fontSize: 20)
+                        : TextStyle(color: Colors.grey, fontSize: 20),
+                  )),
             ],
           ),
+
           SizedBox(
-            height: 20,
+            height: 25,
           ),
           //주문 리스트 위젯
-          Stack(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 30,),
-                      Text('test_menu1',style: TextStyle(fontSize: 20),),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 30,),
-                      Text('test_price1',style: TextStyle(fontSize: 20)),
-                    ],
-                  ),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-
-                    mini: true,
-                    onPressed: _minus,
-                    child: Icon(Icons.subdirectory_arrow_left),
-                    backgroundColor: Color(0xff87dfb3),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    '$count',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  FloatingActionButton(
-                    onPressed: _add,
-                    child: Icon(Icons.add),
-                    mini: true,
-                    backgroundColor: Color(0xff87dfb3),
-                  )
-                ],
+              for (Cart cart in me.Carts)
+                _build_order_information(me.Carts.indexOf(cart), cart),
+              SizedBox(
+                height: 30,
               )
 
+              //객체 생성 함수
             ],
           ),
-
 
           //주문하기 구분선...
           Divider(
@@ -174,84 +197,220 @@ class _orderState extends State<order> {
             children: [
               Text('결제수단'),
               SizedBox(
-                width: 80,
+                width: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Radio(
-                      value: 3,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'mobile';
-                          billing = 3;
-                        });
-                      }),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Radio(
-                      value: 4,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'card';
-                          billing = 4;
-                        });
-                      }),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Radio(
-                      value: 5,
-                      groupValue: billing,
-                      onChanged: (val) {
-                        setState(() {
-                          pay = 'cash';
-                          billing = 5;
-                        });
-                      })
+                  TextButton(
+                      onPressed: () => _mobile_pressed(),
+                      child: Text(
+                        '모바일',
+                        style: mobile
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
+                  TextButton(
+                      onPressed: () => _card_pressed(),
+                      child: Text(
+                        '카드',
+                        style: card
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
+                  TextButton(
+                      onPressed: () => _cash_pressed(),
+                      child: Text(
+                        '현금',
+                        style: cash
+                            ? TextStyle(color: Color(0xff74dfb3), fontSize: 15)
+                            : TextStyle(color: Colors.grey, fontSize: 15),
+                      )),
                 ],
               )
-
             ],
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           //총 구문 금액
           Stack(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 30,),
-                  Text('총 주문 금액',style: TextStyle(fontSize: 15),)
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '총 주문 금액',
+                    style: TextStyle(fontSize: 15),
+                  )
                 ],
-
-
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('20000000원',
-                  style: TextStyle(fontSize: 15),),
-                  SizedBox(width: 45,)
+                  Text(
+                    '$total_price',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  SizedBox(
+                    width: 45,
+                  )
                 ],
               )
-
             ],
           ),
+          SizedBox(height: 233),
 
           //결제하기 버튼
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            buttonHeight: 20.0,
-
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              onPressed: () async {
+                int status;
+                int stop = 0;
+                putShop(me.id, shop);
+                for (Cart cart in me.Carts) {
+                  status = await postPayment(cart, me.id, shop.hostId);
+                  if (status != 201) {
+                    stop = 1;
+                  }
+                }
+                if (stop == 0)
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => order_complete_home(me: me)));
+              },
+              child: Text('결제하기'),
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                  primary: Color(0xff74dfb3)),
+            ),
           )
+        ],
+      ),
+    );
+  }
 
-          
+  Future<int> postPayment(
+    Cart cart,
+    int customerId,
+    int hostId,
+  ) async {
+    var res = await http.post(
+      Uri.parse('$SERVER_IP/payments'),
+      headers: {"Content-Type": "application/json"},
+      body: cart.toJson(customerId, hostId),
+    );
+    return res.statusCode;
+  }
 
-         
+  Future<int> putShop(int customerId, Shop shop) async {
+    var res = await http.put(Uri.parse('$SERVER_IP/shops/${shop.id}'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "shop": {"customer_count": (shop.customerCount + 1).toString()}
+        }));
+    return res.statusCode;
+  }
+
+  Widget _build_order_information(int index, Cart cart) {
+    //total_price += cart.price * cart.count;
+
+    void _add() {
+      setState(() {
+        cart.count++;
+        total_price += cart.price;
+      });
+    }
+
+    void _minus() {
+      setState(() {
+        cart.count--;
+        total_price -= cart.price;
+      });
+    }
+
+    return Container(
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    '${cart.menu}',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text('${cart.price}', style: TextStyle(fontSize: 15)),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        mini: true,
+                        onPressed: _minus,
+                        child: Icon(Icons.subdirectory_arrow_left),
+                        backgroundColor: Color(0xff87dfb3),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    '${cart.count}',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    child: FittedBox(
+                        child: FloatingActionButton(
+                      onPressed: _add,
+                      child: Icon(Icons.add),
+                      mini: true,
+                      backgroundColor: Color(0xff87dfb3),
+                    )),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  )
+                ],
+              )
+            ],
+          )
         ],
       ),
     );

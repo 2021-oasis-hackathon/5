@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:qount/main.dart';
-import 'package:qount/models/menu.dart';
+import 'package:qount/models/menu_qr.dart';
 import 'package:qount/models/shop.dart';
 import 'package:http/http.dart' as http;
 import 'package:qount/models/user.dart';
 import 'package:qount/utils/display.dart';
+import 'package:qount/screens/shop/order.dart';
 
 class MenuGridView extends StatefulWidget {
   final UserMe me;
@@ -38,23 +39,28 @@ class MenuGridViewState extends State<MenuGridView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("${shop.name}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Row(
+          centerTitle: true,
+          title: Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
-                SizedBox(width: 15,),
-                Text("${shop.customerCount} / ${shop.customerCountMax}",style: TextStyle(fontSize: 14))
+                Text("${shop.name}",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text("${shop.customerCount} / ${shop.customerCountMax}",
+                        style: TextStyle(fontSize: 14))
+                  ],
+                )
               ],
-            )
-
-          ],
-        ),
-      ),
+            ),
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -76,7 +82,7 @@ class MenuGridViewState extends State<MenuGridView> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return snapshot.data![index]
-                                  .toWidgetRecommend(context);
+                                  .toWidgetRecommend(context, me);
                               //return Card(child: Center(child: Text("dfdf")));
                             },
                           ),
@@ -113,7 +119,7 @@ class MenuGridViewState extends State<MenuGridView> {
                           // ),
                           itemBuilder: (context, index) {
                             return snapshot.data![index]
-                                .toWidgetListItem(context);
+                                .toWidgetListItem(context, me);
                           },
                         );
                       } else if (snapshot.hasError) {
@@ -128,6 +134,13 @@ class MenuGridViewState extends State<MenuGridView> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => order_home(me: me, shop: shop)));
+        },
+        child: Icon(Icons.shopping_cart),
+      ),
     );
   }
 
@@ -136,7 +149,7 @@ class MenuGridViewState extends State<MenuGridView> {
       Uri.parse("$SERVER_IP/shops/${shop.id}/menus"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "${this.me.jwt}"
+        //"Authorization": "${me.jwt}"
       },
     );
     if (res.statusCode == 200) {
@@ -156,7 +169,7 @@ class MenuGridViewState extends State<MenuGridView> {
       Uri.parse("$SERVER_IP/shops/${shop.id}/menus"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "${this.me.jwt}"
+        //"Authorization": "${me.jwt}"
       },
     );
     if (res.statusCode == 200) {

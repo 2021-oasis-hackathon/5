@@ -20,10 +20,11 @@ class _sliding_homeState extends State<sliding_home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: sliding(me: me),
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      home: Scaffold(
+        body: sliding(me: me),
+      )
+
+
     );
   }
 }
@@ -159,7 +160,7 @@ class _slidingState extends State<sliding> {
           ));
     }
     if (_selectedIndex == 1 && _camera_ready) {
-      return qr_reading();
+      return qr_reading(me: me);
     }
     if (_selectedIndex == 0) {
       return MediaQuery.removePadding(

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qount/models/user.dart';
 
 mixin BasePageGenerator {
-  Icon get icon;
-  Icon get activeIcon => icon;
+  Image get icon;
+  Image get activeIcon => icon;
   String get label;
 
   Widget createWidget({

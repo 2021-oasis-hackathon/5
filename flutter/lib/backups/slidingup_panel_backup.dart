@@ -24,14 +24,15 @@ class sliding extends StatefulWidget {
 
 class _slidingState extends State<sliding> {
   int _selectedIndex = 0;
-  UserMe me;
+  final UserMe me;
 
   _slidingState({required this.me});
+
   List<Widget> _widgetoptions = <Widget>[
     Text(
       'Index 0: shop',
     ),
-    qr_reading(),
+    //qr_reading(),
     Text(
       'Index 2: Mypage',
     ),

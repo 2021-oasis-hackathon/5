@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(order_complete_home());
+import 'package:qount/backups/slidingup_panel_backup.dart';
+import 'package:qount/models/user.dart';
+//void main() => runApp(order_complete_home());
 
 class order_complete_home extends StatelessWidget {
-  const order_complete_home({Key? key}) : super(key: key);
+  UserMe me;
+  order_complete_home({required this.me});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: order_complete(),
+      home: order_complete(me:me),
     );
   }
 }
 
 class order_complete extends StatefulWidget {
-  const order_complete({Key? key}) : super(key: key);
+  UserMe me;
+  order_complete({required this.me});
 
   @override
-  _order_completeState createState() => _order_completeState();
+  _order_completeState createState() => _order_completeState(me:me);
 }
 
 class _order_completeState extends State<order_complete> {
+  UserMe me;
+  _order_completeState({required this.me});
   String _shop_name = 'name';
   int _order_number = 0;
   @override
@@ -67,10 +72,12 @@ class _order_completeState extends State<order_complete> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>sliding_home(me: me)));
+                    },
                      style: ElevatedButton.styleFrom(
-                       primary: Color(0xff87dfb3),
-                       minimumSize: Size(300.0,30.0)
+                       primary: Color(0xff74dfb3),
+                       minimumSize: Size(double.infinity, 30)
                      ),
                     child: Text('확인'),
                   )

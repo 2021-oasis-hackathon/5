@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:qount/models/user.dart';
 
 class Menu {
   final int id;
@@ -32,11 +33,13 @@ class Menu {
     );
   }
 
-  Widget toWidgetListItem(BuildContext context) {
+  Widget toWidgetListItem(BuildContext context, UserMe me) {
     return Container(
       child: Card(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            me.Carts.add(new Cart(menu: this.name, price: this.price, count: 1));
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -88,13 +91,14 @@ class Menu {
     );
   }
 
-  Widget toWidgetRecommend(BuildContext context) {
+  Widget toWidgetRecommend(BuildContext context, UserMe me) {
     return Container(
       width: 200,
       padding: EdgeInsets.all(8),
       alignment: Alignment.center,
       child: InkWell(
         onTap: () {
+          me.Carts.add(new Cart(menu: this.name, price: this.price, count: 1));
 
         },
         child: Column(
