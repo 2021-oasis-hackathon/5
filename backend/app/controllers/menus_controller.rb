@@ -2,7 +2,7 @@ class MenusController < ApplicationController
 
 	# GET /shops/:id/menus
 	def index
-		menus = Menu.all
+		menus = Menu.where(shop_id: params[:shop_id])
 		json_response(menus, :ok)
 	end
 
@@ -17,6 +17,7 @@ class MenusController < ApplicationController
 		if (has_create_authority?)
 			param = menu_params
 			param[:shop_id] = params[:shop_id]
+			logger.debug(param)
 			menu = Menu.create!(param)
 			return json_response(menu, :created)
 		end
@@ -35,7 +36,8 @@ class MenusController < ApplicationController
 
 	# DELETE /shops/:id/menus/:id
 	def destroy
-		if (has_delete_authority?)
+		menu = Menu.find(params[:id])
+		if (has_delete_authority?(menu))
 			Menu.destroy(params[:id])
 			response = { message: Message.menu_destroyed }
 			return json_response(response, :no_content)
@@ -46,7 +48,7 @@ class MenusController < ApplicationController
 	private
 
 	def menu_params
-		params.require(:menu).permit(:name, :detail, :price, :image)
+		params.require(:menu).permit(:name, :detail, :price, :image, :recommend)
 	end
 
 	def has_update_authority?(menu)
@@ -54,7 +56,7 @@ class MenusController < ApplicationController
 		@current_user.id == shop.host_id || @current_user.role == "admin"
 	end
 
-	def has_delete_authority?
+	def has_delete_authority?(menu)
 		shop = Shop.find(menu.shop_id)
 		@current_user.id == shop.host_id || @current_user.role == "admin"
 	end

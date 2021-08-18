@@ -1,7 +1,8 @@
 class CartsController < ApplicationController
 	# GET /users/:id/cart
 	def index
-		carts = Cart.all
+		
+		carts = Cart.where(customer_id: params[:user_id])
 		json_response(carts, :ok)
 	end
 
