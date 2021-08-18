@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_update_params
-		params.require(:user).permit(:name, :nickname, :phone_number, :customer_count, :customer_count_max)
+		params.require(:user).permit(:name, :nickname, :phone_number, :customer_count, :customer_count_max, :shop_id)
 	end
 
 	def has_create_authority?

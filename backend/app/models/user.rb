@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 	has_secure_password
 
-	has_many :shops, dependent: :destroy
+	has_one :shop, dependent: :destroy, foreign_key: "shop_id"
 	has_many :carts, dependent: :destroy
 	has_many :payments
 

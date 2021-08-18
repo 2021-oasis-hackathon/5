@@ -17,6 +17,8 @@ class ShopsController < ApplicationController
 			param = shop_params
 			param[:host_id] = @current_user.id
 			shop = Shop.create!(param)
+			user = User.find(@current_user.id)
+			user.shop_id = shop.id
 			return json_response(shop, :created)
 		end
 		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
