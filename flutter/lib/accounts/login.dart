@@ -56,7 +56,12 @@ class _LoginState extends State<LoginHome> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('imgs/logo.png',width: 300,height: 150,fit: BoxFit.cover,)),
+                    child: Image.asset(
+                  'imgs/logo.png',
+                  width: 300,
+                  height: 150,
+                  fit: BoxFit.cover,
+                )),
               ),
             ),
             SizedBox(
@@ -99,12 +104,16 @@ class _LoginState extends State<LoginHome> {
                 style: TextStyle(color: Colors.black, fontSize: 15),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               height: 50,
               width: 290,
               decoration: BoxDecoration(
-                  color: Color(0xff74dfb3), borderRadius: BorderRadius.circular(20),),
+                color: Color(0xff74dfb3),
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: TextButton(
                 onPressed: () async {
                   var email = _emailController.text;
@@ -136,7 +145,6 @@ class _LoginState extends State<LoginHome> {
                         "No Account was found matching that username and password");
                   }
                 },
-
                 child: Text(
                   'Login',
                   style: TextStyle(color: Colors.black, fontSize: 25),
@@ -147,11 +155,15 @@ class _LoginState extends State<LoginHome> {
             //   height: 130,
             // ),
             TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => SignUp()));
-                },
-                child: Text('New User? Create Account', style: TextStyle(color: Colors.black),),)
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => SignUp()));
+              },
+              child: Text(
+                'New User? Create Account',
+                style: TextStyle(color: Colors.black),
+              ),
+            )
           ],
         ),
       ),
@@ -181,12 +193,19 @@ class _LoginState extends State<LoginHome> {
         role: j['role'],
         phoneNumber: j['phone_number'],
         name: j['name'],
+        shopId: j['shop_id'],
       );
       //me.email
       return me;
     }
-    UserMe me =
-        UserMe(jwt: "", id: 0, email: "", role: "", phoneNumber: "", name: "");
+    UserMe me = UserMe(
+        jwt: "",
+        id: 0,
+        email: "",
+        role: "",
+        phoneNumber: "",
+        name: "",
+        shopId: 0);
     return me;
   }
 
