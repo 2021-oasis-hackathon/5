@@ -47,7 +47,7 @@ class ShopGridViewState extends State<ShopGridView> {
                       (MediaQuery.of(context).size.height / 1.6),
                 ),
                 itemBuilder: (context, index) {
-                  return snapshot.data![index].toWidgetGridTile();
+                  return snapshot.data![index].toWidgetGridTile(context, me);
                 },
               );
             } else if (snapshot.hasError) {

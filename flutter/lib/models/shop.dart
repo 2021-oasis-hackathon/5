@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:qount/models/user.dart';
+import 'package:qount/screens/menu/menu.dart';
 
 class Shop {
   final int id;
@@ -39,44 +41,53 @@ class Shop {
 
   Widget toWidget() {
     return Container(
-      child: Card(
-        child: Row(
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Text(
-                    this.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(this.openTime),
-                  Text(this.location),
-                ],
-              ),
-            ),
-            Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  this.image,
-                  height: 100.0,
-                  width: 100.0,
+      child: InkWell(
+        onTap: () {},
+        child: Card(
+          child: Row(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Text(
+                      this.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(this.openTime),
+                    Text(this.location),
+                  ],
                 ),
               ),
-            ),
-          ],
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: CachedNetworkImage(
+                    height: 140,
+                    imageUrl: this.image,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget toWidgetGridTile() {
+  Widget toWidgetGridTile(BuildContext context, UserMe me) {
     return Container(
       padding: EdgeInsets.all(8),
       alignment: Alignment.center,
       child: Card(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MenuGridView(me: me, shop: this)));
+          },
           child: Column(
             children: <Widget>[
               Align(

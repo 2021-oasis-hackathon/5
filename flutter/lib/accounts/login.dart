@@ -155,10 +155,20 @@ class _LoginState extends State<LoginHome> {
       ),
     );
     if (res.statusCode == 200) {
-      UserMe me = UserMe(jwt: json.decode(res.body)['auth_token']);
+      var j = json.decode(res.body);
+      UserMe me = UserMe(
+        id: j['id'],
+        jwt: j['auth_token'],
+        email: j['email'],
+        role: j['role'],
+        phoneNumber: j['phone_number'],
+        name: j['name'],
+      );
+      //me.email
       return me;
     }
-    UserMe me = UserMe(jwt: "");
+    UserMe me =
+        UserMe(jwt: "", id: 0, email: "", role: "", phoneNumber: "", name: "");
     return me;
   }
 
