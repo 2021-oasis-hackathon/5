@@ -15,6 +15,9 @@ BitmapDescriptor checkCustomerCountMarker(Shop shop) {
   if (shop.customerCount.toDouble() / shop.customerCountMax.toDouble() >= 1)
     hue = 1;
   else if (shop.customerCount.toDouble() / shop.customerCountMax.toDouble() <=
-      0) hue = 0;
+      0)
+    hue = 0;
+  else
+    hue = shop.customerCount.toDouble() / shop.customerCountMax.toDouble();
   return BitmapDescriptor.defaultMarkerWithHue(((1 - hue) * 120));
 }
