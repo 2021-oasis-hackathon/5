@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 	has_secure_password
+	 after_initialize :default_values
 
 	has_one :shop, dependent: :destroy, foreign_key: "shop_id"
 	has_many :carts, dependent: :destroy
@@ -23,4 +24,10 @@ class User < ApplicationRecord
 	def is_admin?
 		self.role == "admin"
 	end
+	
+
+  private
+    def default_values
+      self.shop_id ||= 0
+    end
 end

@@ -1,18 +1,19 @@
 class PaymentsController < ApplicationController
-end
-class UsersController < ApplicationController
+	
 
+	
 	# GET /payments
 	def index
 		if (has_host_read_authority?)
+			logger.debug("uuuuuu")
 			payments = Payment.where(host_id: @current_user.id)
-			json_response(payments, :ok)
+			return json_response(payments, :ok)
 		elsif (has_customer_read_authority?)
 			payments = Payment.where(customer_id: @current_user.id)
-			json_response(payments, :ok)
+			return json_response(payments, :ok)
 		elsif (has_admin_authority?)
 			payments = Payment.all
-			json_response(payments, :ok)
+			return json_response(payments, :ok)
 		end
 
 		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
 	def show
 		payment = Payment.find(params[:id])
 		if (has_read_authority?(payment))
-			json_response(payment, :ok)
+			return json_response(payment, :ok)
 		end
 		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
 	def create
 		if (has_create_authority?)
 			pay = Payment.create!(pay_params)
-			return json_response(pay_params, :created)
+			return json_response(pay_params, :created)	
 		end
 		raise(ExceptionHandler::Unauthorized, Message.unauthorized)
 	end
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
 
 	private
 
-	def user_params
+	def pay_params
 		params.require(:payment).permit(:price, :status, :customer_id, :host_id, :name)
 	end
 
@@ -82,7 +83,8 @@ class UsersController < ApplicationController
 	end
 
 	def has_create_authority?
-		(user_params[:role] == 'customer' || user_params[:role] == 'host') && user_params[:status] == 'paid'
+		pay_params[:status] == 'paid' && (pay_params[:customer_id].to_i == @current_user.id)
+		
 	end
 
 	def has_update_authority?
