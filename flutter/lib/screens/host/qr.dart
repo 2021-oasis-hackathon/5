@@ -18,8 +18,10 @@ class QRPageGenerator with BasePageGenerator {
 
   @override
   // TODO: implement icon
-  Icon get icon => Icon(Icons.ac_unit);
-
+  Image get icon => Image.asset(
+        "imgs/icon1.png",
+        height: 50,
+      );
   @override
   // TODO: implement label
   String get label => "QR발급";
