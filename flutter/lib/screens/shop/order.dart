@@ -270,7 +270,7 @@ class _orderState extends State<order> {
                 int status;
                 int stop = 0;
                 for (Cart cart in me.Carts) {
-                  status = await postPayment(cart, me.id, shop.id);
+                  status = await postPayment(cart, me.id, shop.hostId);
                   if (status != 201) {
                     stop = 1;
                   }

@@ -17,6 +17,7 @@ class Shop {
   final int customerCount;
   final int customerCountMax;
   final int status;
+  final int hostId;
 
   Shop({
     required this.id,
@@ -31,6 +32,7 @@ class Shop {
     required this.customerCount,
     required this.customerCountMax,
     required this.status,
+    required this.hostId,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class Shop {
       customerCount: json['customer_count'],
       customerCountMax: json['customer_count_max'],
       status: json['status'],
+      hostId: json['host_id'],
     );
   }
 
