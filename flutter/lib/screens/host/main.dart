@@ -30,7 +30,9 @@ class _State extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgets[_currentIndex].createWidget(
+      body:
+
+      _widgets[_currentIndex].createWidget(
         me: me,
       ),
       bottomNavigationBar: BottomNavigationBar(
