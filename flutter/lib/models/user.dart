@@ -35,11 +35,11 @@ class Cart {
   String toJson(int customerId, int hostId) {
     var body = json.encode({
       "payment": {
-        "price": price,
+        "price": price.toString(),
         "name": menu,
         "status": "paid",
-        "customer_id": customerId,
-        "host_id": hostId,
+        "customer_id": customerId.toString(),
+        "host_id": hostId.toString()
       }
     });
     return body;
