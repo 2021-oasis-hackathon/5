@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qount/backups/slidingup_panel_backup.dart';
 import 'package:qount/models/user.dart';
 //void main() => runApp(order_complete_home());
 
@@ -72,7 +73,7 @@ class _order_completeState extends State<order_complete> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     onPressed: (){
-                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>sliding_home(me: me)));
                     },
                      style: ElevatedButton.styleFrom(
                        primary: Color(0xff74dfb3),

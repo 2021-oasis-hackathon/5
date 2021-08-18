@@ -261,7 +261,7 @@ class _orderState extends State<order> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => order_complete_home(me)));
+                    builder: (context) => order_complete_home(me:me)));
               },
               child: Text('결제하기'),
               style: ElevatedButton.styleFrom(
