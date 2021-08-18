@@ -37,7 +37,6 @@ class LoginHome extends StatefulWidget {
 class _LoginState extends State<LoginHome> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool isClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +112,23 @@ class _LoginState extends State<LoginHome> {
                   var user = await attemptLogIn(email, password);
                   if (user.jwt != "") {
                     print("is ok?");
+                    print("${user.role}");
                     // SchedulerBinding.instance!
                     //     .addPostFrameCallback((timeStamp) {
                     //   // user as argumnet
-
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        // builder: (context) => ShopGridView(me: user)));
-                        //builder: (context) => ShopGridView(me: user)));
-                        builder: (context) => MainHostPage(me: user)));
+                    if (user.role == "host") {
+                      print("host");
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          // builder: (context) => ShopGridView(me: user)));
+                          //builder: (context) => ShopGridView(me: user)));
+                          builder: (context) => MainHostPage(me: user)));
+                    } else if (user.role == "customer") {
+                      print("cusotmer");
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          // builder: (context) => ShopGridView(me: user)));
+                          //builder: (context) => ShopGridView(me: user)));
+                          builder: (context) => sliding_home(me: user)));
+                    }
 
                     // });
                   } else {

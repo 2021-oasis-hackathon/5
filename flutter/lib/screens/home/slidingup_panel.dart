@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:qount/models/user.dart';
 import 'Qr_reading.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'map.dart';
 
-class sliding_home extends StatelessWidget {
-  const sliding_home({Key? key}) : super(key: key);
+class sliding_home extends StatefulWidget {
+  UserMe me;
+  sliding_home({required this.me});
 
+  @override
+  _sliding_homeState createState() => _sliding_homeState();
+}
+
+class _sliding_homeState extends State<sliding_home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: sliding());
@@ -29,12 +36,10 @@ class _slidingState extends State<sliding> {
     setState(() {
       _camera_ready = false;
       _selectedIndex = index;
-      if(_pc.panelPosition < 0.1){
+      if (_pc.panelPosition < 0.1) {
         _pc.open();
         _pc.animatePanelToPosition(0.1, duration: Duration(milliseconds: 500));
       }
-
-
     });
   }
 
@@ -72,7 +77,6 @@ class _slidingState extends State<sliding> {
           maxHeight: 640,
           minHeight: 0,
           parallaxOffset: .5,
-
           panelBuilder: (sc) => _panel(sc, _selectedIndex, _camera_ready),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
