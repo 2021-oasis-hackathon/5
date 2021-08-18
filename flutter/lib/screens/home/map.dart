@@ -9,6 +9,8 @@ import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
+
 class Googlemap_home extends StatefulWidget {
   const Googlemap_home({Key? key}) : super(key: key);
 
@@ -24,17 +26,15 @@ class _Googlemap_homeState extends State<Googlemap_home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setCustomMarker();
+
   }
-  void setCustomMarker() async{
-    icon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'imgs/logo1.png');
-  }
+ 
   void _onMapCreated(GoogleMapController controller){
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId('id'),
         position: LatLng(37.4537251, 126.7960716),
-        icon: icon,
+        icon: BitmapDescriptor.defaultMarkerWithHue(270),
 
       ));
     });
@@ -61,8 +61,8 @@ class _Googlemap_homeState extends State<Googlemap_home> {
           initialCameraPosition: _kGooglePlex,
           onCameraMove: (_) {},
           myLocationButtonEnabled: false,
-
           onMapCreated: _onMapCreated,
+          
 
 
           markers: Set.from(_markers),
