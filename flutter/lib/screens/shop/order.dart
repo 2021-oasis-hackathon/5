@@ -300,7 +300,10 @@ class _orderState extends State<order> {
   ) async {
     var res = await http.post(
       Uri.parse('$SERVER_IP/payments'),
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": me.jwt.toString()
+      },
       body: cart.toJson(customerId, hostId),
     );
     return res.statusCode;
@@ -308,7 +311,10 @@ class _orderState extends State<order> {
 
   Future<int> putShop(int customerId, Shop shop) async {
     var res = await http.put(Uri.parse('$SERVER_IP/shops/${shop.id}'),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": me.jwt.toString()
+        },
         body: json.encode({
           "shop": {"customer_count": (shop.customerCount + 1).toString()}
         }));
