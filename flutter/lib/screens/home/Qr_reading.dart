@@ -4,17 +4,14 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
-
 class qr_home extends StatelessWidget {
   const qr_home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:qr_reading()
-    );  }
+    return MaterialApp(home: qr_reading());
+  }
 }
-
 
 class qr_reading extends StatefulWidget {
   const qr_reading({Key? key}) : super(key: key);
@@ -38,7 +35,6 @@ class _qr_readingState extends State<qr_reading> {
     }
     controller!.resumeCamera();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +73,13 @@ class _qr_readingState extends State<qr_reading> {
                 ),
               ],
             ),
-            SizedBox(height: 36.0,),
-
-            Expanded(child: _buildQrView(context),flex: 3,),
+            SizedBox(
+              height: 36.0,
+            ),
+            Expanded(
+              child: _buildQrView(context),
+              flex: 3,
+            ),
             Expanded(
               flex: 1,
               child: FittedBox(
@@ -97,14 +97,13 @@ class _qr_readingState extends State<qr_reading> {
               ),
             )
           ],
-        )
-    );
+        ));
+  }
 
-      }
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
@@ -148,4 +147,3 @@ class _qr_readingState extends State<qr_reading> {
     super.dispose();
   }
 }
-
