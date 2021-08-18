@@ -133,10 +133,10 @@ class _LoginState extends State<LoginHome> {
                           builder: (context) => MainHostPage(me: user)));
                     } else if (user.role == "customer") {
                       print("cusotmer");
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      Navigator.of(context).push(MaterialPageRoute(
                           // builder: (context) => ShopGridView(me: user)));
                           //builder: (context) => ShopGridView(me: user)));
-                          builder: (context) => sliding_home(me: user)));
+                          builder: (context) => sliding(me: user)));
                     }
 
                     // });

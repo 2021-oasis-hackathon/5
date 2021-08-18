@@ -40,14 +40,27 @@ class MenuGridViewState extends State<MenuGridView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("${shop.name}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
-          ],
-        ),
+        title: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${shop.name}",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("${shop.openTime}", style: TextStyle(fontSize: 14)),
+                  SizedBox(width: 15,),
+
+                  Text("${shop.customerCount} / ${shop.customerCountMax}",style: TextStyle(fontSize: 14))
+                ],
+              )
+
+            ],
+          ),
+        )
+
+
       ),
       body: SingleChildScrollView(
         child: Column(

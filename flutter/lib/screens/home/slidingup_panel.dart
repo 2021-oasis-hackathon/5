@@ -20,10 +20,11 @@ class _sliding_homeState extends State<sliding_home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: sliding(me: me),
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      home: Scaffold(
+        body: sliding(me: me),
+      )
+
+
     );
   }
 }

@@ -256,16 +256,20 @@ class _orderState extends State<order> {
           SizedBox(height: 233),
 
           //결제하기 버튼
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => order_complete_home()));
-            },
-            child: Text('결제하기'),
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
-                primary: Color(0xff74dfb3)),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => order_complete_home()));
+              },
+              child: Text('결제하기'),
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                  primary: Color(0xff74dfb3)),
+            ),
           )
+
         ],
       ),
     );
